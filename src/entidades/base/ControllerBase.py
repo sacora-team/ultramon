@@ -12,26 +12,26 @@ from pygame import (
     K_DOWN,
 )
 
-from .ViewBase import ViewBase
-
+from ...constantes.estadosJuego import EstadosJuego
 
 class ControllerBase:
     def __init__(self) -> None:
         init()
-        self.ViewBase = ViewBase()
+        self.initController()
         self.ejecutandose: bool = True
-        self.estado: str = "MENU"
-        self.estados: tuple[str] = ("MENU", "JUEGO")
-        self.setUpKey(False)
-        self.setDownKey(False)
-        self.setLeftKey(False)
-        self.setRightKey(False)
-        self.setSelectKey(False)
-        self.setPauseKey(False)
-        mixer.Channel(0).play(mixer.Sound("./assets/sonidos/opening.mp3"))
+        self.estado: int = EstadosJuego.MENU
+        self.estados: EstadosJuego = EstadosJuego
+        self.upKey: bool = False
+        self.downKey: bool = False
+        self.leftKey: bool = False
+        self.rightKey: bool = False
+        self.selectKey: bool = False
+        self.backKey: bool = False
 
-    def getView(self) -> ViewBase:
-        return self.ViewBase
+    def initController(self):
+        # TODO: Verificar por que en linux tira 'pygame.error: Unable to open file'   
+        # mixer.Channel(0).play(mixer.Sound("./assets/sonidos/opening.mp3"))
+        pass
 
     def getEjecutandose(self) -> bool:
         return self.ejecutandose
@@ -54,24 +54,9 @@ class ControllerBase:
         self.loop()
 
     def loop(self) -> None:
-        while self.ejecutandose:
-            self.checkearEventos()
+        raise NotImplementedError
 
-            if self.estado == "MENU":
-                if self.getSelectKey():
-                    print("Seleccionado!")
-                    self.resetearKeys()
-                elif self.getUpKey():
-                    print("Arriba!")
-                    self.resetearKeys()
-                elif self.getDownKey():
-                    print("Abajo!")
-                    self.resetearKeys()
-
-            if self.getEstado() == "JUEGO":
-                pass
-
-    def checkearEventos(self) -> None:
+    def chequearEventos(self) -> None:
         for evento in event.get():
             if evento.type == QUIT:
                 self.setEjecutandose(False)
@@ -113,7 +98,7 @@ class ControllerBase:
         self.rightKey = estado
 
     def setSelectKey(self, estado: bool) -> None:
-        self.startKey = estado
+        self.selectKey = estado
 
     def setPauseKey(self, estado: bool) -> None:
         self.backKey = estado
@@ -131,7 +116,7 @@ class ControllerBase:
         return self.rightKey
 
     def getSelectKey(self) -> bool:
-        return self.startKey
+        return self.selectKey
 
     def getPauseKey(self) -> bool:
         return self.backKey

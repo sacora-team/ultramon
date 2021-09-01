@@ -1,8 +1,8 @@
-import ctypes
-from src.ControllerBase import ControllerBase
+from src.AppController import AppController
 
-appid = u"ultramon"
-ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(appid)
+# TODO: Preguntar si es windows OS
+# appid = u"ultramon"
+# ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(appid)
 
 if __name__ == "__main__":
-    ControllerBase().iniciarJuego()
+    AppController().iniciarJuego()
