@@ -6,8 +6,6 @@ Juego tipo RPG de peleas entre pokemones.
 
 Python instalado globalmente y agregado al PATH.
 
-Windows OS.
-
 ## Formatear archivos python
 
 `black [path a archivo o directorio]`
@@ -16,9 +14,21 @@ Windows OS.
 
 ### Descargar / clonar repositorio y, en el directorio root:
 
+#### Windows:
+
 1. `python -m venv venv`
 
 2. `venv\Scripts\activate`
+
+3. `python -m pip install -r requirements.txt`
+
+4. `python main.py`
+
+#### Linux / macOS:
+
+1. `python -m venv venv`
+
+2. `source venv/bin/activate`
 
 3. `python -m pip install -r requirements.txt`
 
