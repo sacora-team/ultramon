@@ -15,3 +15,6 @@ class AppController(ControllerBase):
         while self.ejecutandose:
             if self.getEstado() == EstadosJuego.MENU:
                 self.getMenuPrincipal().activar()
+                self.setEstado(EstadosJuego.JUEGO)
+            if self.getEstado() == EstadosJuego.JUEGO:
+                pass

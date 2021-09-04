@@ -19,7 +19,7 @@ class ViewBase:
     def getWindow(self) -> Surface:
         return self.window
 
-    def getColores(self) -> dict:
+    def getColores(self) -> Colores:
         return self.colores
 
     def getAncho(self) -> int:
@@ -41,4 +41,8 @@ class ViewBase:
     def renderizarTexto(self, texto: str, size: int, color: tuple[int], x: int, y: int) -> None:
         typography = font.Font(self.getFont(), size)
         self.getWindow().blit(typography.render(texto, True, color), (x, y))
+        display.update()
+        
+    def limpiarPantalla(self) -> None:
+        self.getWindow().fill(self.getColores().NEGRO)
         display.update()

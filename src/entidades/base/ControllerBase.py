@@ -42,12 +42,7 @@ class ControllerBase:
     def getEstado(self) -> str:
         return self.estado
 
-    def setEstado(self, estado: str) -> None:
-        estado = estado.upper()
-        if estado not in self.estados:
-            raise ValueError(
-                estado + " no es un estado permitido en " + str(self.estados)
-            )
+    def setEstado(self, estado: int) -> None:
         self.estado = estado
 
     def iniciarJuego(self) -> None:
