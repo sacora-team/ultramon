@@ -61,16 +61,17 @@ class Ash:
             pygame.image.load('assets/personajes/ash/reversaCaminando1.png'),
             pygame.image.load('assets/personajes/ash/reversaCaminando2.png')]
         
-        self.spriteQuieto: str = pygame.image.load('assets/personajes/ash/frente.png')
+        self.spriteQuieto: tuple = [pygame.image.load('assets/personajes/ash/frente.png')]
 
 
+    # Velocidad
     def getVelocidad(self) -> int:
         return self.velocidad
 
     def setVelocidad(self, velocidad: int):
         self.velocidad = velocidad
 
-    # Get y Set de PX y PY
+    # Ubicacion del personaje en X e Y
     def getPx(self) -> int:
         return self.px
 
@@ -83,7 +84,7 @@ class Ash:
     def setPy(self, py: int):
         self.py = py
 
-    # Get y Set movimientos
+    # Movimientos
     def getIzquierda(self) -> bool:
         return self.izquierda
 
@@ -109,6 +110,7 @@ class Ash:
         self.arriba = arriba
 
     # Get de los sprites
+
     def getSpriteIzquierda(self) -> tuple:
         return self.spriteIzquierda
 
@@ -127,16 +129,13 @@ class Ash:
     def getEjecutar(self) -> bool:
         return self.ejecutar    
 
+    # Cuenta pasos
+
     def getCuentaPasos(self) -> int:
         return self.cuentaPasos
 
     def setCuentaPasos(self, cuentaPasos: int):
         self.cuentaPasos = cuentaPasos
-
-    def contadorDePasos(self) -> int:
-        # Contador de pasos
-        if (self.getCuentaPasos() + 1) >= 3:
-            self.setCuentaPasos(0)
 
     def movimiento(self):
 
@@ -145,30 +144,28 @@ class Ash:
 
         # Movimiento hacia la izquierda
         if self.getIzquierda():
-            PANTALLA.blit(self.getSpriteIzquierda[self.contadorDePasos()], (self.getPx(), self.getPy()))
+            PANTALLA.blit(self.getSpriteIzquierda[self.getCuentaPasos()], (self.getPx(), self.getPy()))
             self.setCuentaPasos(self.getCuentaPasos() + 1)
 
         # Movimiento hacia la derecha
         elif self.getDerecha():
-            PANTALLA.blit(self.getSpriteDerecha[self.contadorDePasos()], (self.getPx(), self.getPy()))
+            PANTALLA.blit(self.getSpriteDerecha[self.getCuentaPasos()], (self.getPx(), self.getPy()))
             self.setCuentaPasos(self.getCuentaPasos() + 1)
 
         # Movimiento hacia arriba
         elif self.getArriba():
-            PANTALLA.blit(self.getSpriteArriba[self.contadorDePasos()], (self.getPx(), self.getPy()))
+            PANTALLA.blit(self.getSpriteArriba[self.getCuentaPasos()], (self.getPx(), self.getPy()))
             self.setCuentaPasos(self.getCuentaPasos() + 1)
 
         # Movimiento hacia arriba
         elif self.getAbajo():
-            PANTALLA.blit(self.getSpriteAbajo[self.contadorDePasos()], (self.getPx(), self.getPy()))
-            self.setCuentaPasos(self.getCuentaPasos() + 1) 
-
-        else:
-            PANTALLA.blit(self.getSpriteQuieto(), (self.getPx(), self.getPy()))
+            PANTALLA.blit(self.getSpriteAbajo[self.getCuentaPasos()], (self.getPx(), self.getPy()))
+            self.setCuentaPasos(self.getCuentaPasos() + 1)
 
         pygame.display.update()
 
     # Bucle de acciones y controles
+    
     def ejecutarMovimiento(self):
         while self.getEjecutar():
 
@@ -183,6 +180,10 @@ class Ash:
 
             # Tecla pulsada
             keys = pygame.key.get_pressed()
+
+            # Contador de pasos
+            if (self.getCuentaPasos() + 1) >= 3:
+                self.setCuentaPasos(0)
 
             # Tecla A - Movimiento a la izquierda
             if keys[pygame.K_a]:
@@ -229,8 +230,9 @@ class Ash:
                 self.setCuentaPasos(0)
 
             # Actualización de la ventana   
+            
             self.movimiento()
-            pygame.display.update()
+            pygame.display.flip()
 
 
 ash = Ash().ejecutarMovimiento()
