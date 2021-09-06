@@ -1,7 +1,22 @@
 #!/bin/bash
-sudo apt install venv 
-sudo apt install pip
-python -m venv venv
-souce venv/bin/activate
-python -m pip install -r requirements.txt
-python main.py
+
+sudo apt install software-properties-common -y
+
+sudo add-apt-repository ppa:deadsnakes/ppa
+
+sudo apt install python3.9 -y
+
+sudo apt install python3.9-venv -y
+
+sudo apt install python3-pip -y
+
+python3 -m venv venv
+
+source venv/bin/activate
+
+python3 -m pip install -r requirements.txt
+
+python3 main.py
+
+
+
