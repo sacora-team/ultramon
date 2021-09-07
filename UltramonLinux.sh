@@ -1,13 +1,6 @@
 #!/bin/bash
 
-
-echo Cual es el user de este dispositivo?
-
-read varname
-
-echo Donde Estaba la carpeta del juego?
-
-read carpetaDelJuego
+source InstaladorLinux.sh
 
 cd /home/$varname/$carpetaDelJuego/ultramon/
 
