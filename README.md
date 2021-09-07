@@ -16,20 +16,11 @@ Python instalado globalmente y agregado al PATH.
 
 #### Windows:
 
-1. `python -m venv venv`
+Ejecutar con powershell(Desde la consola o haciendo doble click) en el archivo UltramonWindows
 
-2. `venv\Scripts\activate`
-
-3. `python -m pip install -r requirements.txt`
-
-4. `python main.py`
 
 #### Linux / macOS:
 
-1. `python -m venv venv`
+Hacer un bash de UltramonLinux
 
-2. `source venv/bin/activate`
-
-3. `python -m pip install -r requirements.txt`
-
-4. `python main.py`
+ej: bash /home/mint/ultramon/UltramonLinux.sh
