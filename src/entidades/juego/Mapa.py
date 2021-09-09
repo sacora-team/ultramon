@@ -1,70 +1,74 @@
 import pygame
 
-ANCHO = pygame.display.Info().current_w
-ALTO = pygame.display.Info().current_h
+class Mapa:
+    pygame.init()
 
-NEGRO = (0, 0, 0)
-BLANCO = (255, 255, 255)
-VERDE = ( 0, 255, 0)
-ROJO = (255, 0, 0)
+    ANCHO_PANTALLA: int = pygame.display.Info().current_w
+    ALTO_PANTALLA: int = pygame.display.Info().current_h
 
-PASTO = pygame.image.load("assets/relieves/pasto.png")
-PASTO = pygame.transform.scale(PASTO, (30, 30))
-TIERRA = pygame.image.load("assets/relieves/tierra.png")
-TIERRA = pygame.transform.scale(TIERRA, (30, 30))
+    NEGRO = (0, 0, 0)
+    BLANCO = (255, 255, 255)
+    VERDE = ( 0, 255, 0)
+    ROJO = (255, 0, 0)
 
-LARGO  = 30
-ALTO = 30
-MARGEN = 1
- 
-grid = []
-for fila in range(100):
-    grid.append([])
-    for columna in range(100):
-        grid[fila].append(1)
-grid[0][0] = 1
+    ANCHO_BLOQUE  = 45
+    ALTO_BLOQUE = 45
+    MARGEN_BLOQUE = 1
 
-pygame.init()  
+    CANTIDAD_FILAS: int = ANCHO_PANTALLA // ANCHO_BLOQUE
+    CANTIDAD_COLUMNAS: int = ALTO_PANTALLA // ALTO_BLOQUE
 
-DIMENSION_VENTANA = [ANCHO, ALTO]
-pantalla = pygame.display.set_mode(DIMENSION_VENTANA)
-pygame.display.set_caption("Mapa")
+    PASTO = pygame.image.load("assets/relieves/pasto.png")
+    PASTO = pygame.transform.scale(PASTO, (ALTO_BLOQUE, ANCHO_BLOQUE))
+    TIERRA = pygame.image.load("assets/relieves/tierra.png")
+    TIERRA = pygame.transform.scale(TIERRA, (ALTO_BLOQUE, ANCHO_BLOQUE))
 
-finalizar = True
-reloj = pygame.time.Clock()
-
-while finalizar:
-    for evento in pygame.event.get(): 
-        if evento.type == pygame.QUIT: 
-            finalizar = False
-
-        elif evento.type == pygame.MOUSEBUTTONDOWN:
-            pos = pygame.mouse.get_pos()
-            columna = pos[0] // (LARGO + MARGEN)
-            fila = pos[1] // (ALTO + MARGEN)
-            grid[fila][columna] = 1
-            
-        elif evento.type == pygame.MOUSEBUTTONUP:
-            pos = pygame.mouse.get_pos()
-            columna = pos[0] // (LARGO + MARGEN)
-            fila = pos[1] // (ALTO + MARGEN)
-            grid[fila][columna] = 0
-
-
-    pantalla.fill(NEGRO)
+    grid = []
 
     for fila in range(100):
+        grid.append([])
         for columna in range(100):
-            if grid[fila][columna] == 1:
-                pantalla.blit(PASTO, (((MARGEN + LARGO) * columna + MARGEN), ((MARGEN + ALTO) * fila + MARGEN)))
-                PASTO_RECT = PASTO.get_rect()
-                pantalla.blit(PASTO, PASTO_RECT)
-            elif grid[fila][columna] == 0:
-                pantalla.blit(TIERRA, (((MARGEN + LARGO) * columna + MARGEN), ((MARGEN + ALTO) * fila + MARGEN)))
-                TIERRA_RECT = TIERRA.get_rect()
-                pantalla.blit(TIERRA, TIERRA_RECT)
+            grid[fila].append(1)
+    grid[0][0] = 1
 
-    reloj.tick(100)
-    pygame.display.flip()
+    DIMENSION_VENTANA = [ANCHO_PANTALLA, ALTO_PANTALLA]
+    pantalla = pygame.display.set_mode(DIMENSION_VENTANA)
+    pygame.display.set_caption("Mapa")
 
-pygame.quit()
+    bucle = True
+    reloj = pygame.time.Clock()
+
+    while bucle:
+        for evento in pygame.event.get(): 
+            if evento.type == pygame.QUIT: 
+                bucle = False
+
+            elif evento.type == pygame.MOUSEBUTTONDOWN:
+                pos = pygame.mouse.get_pos()
+                columna = pos[0] // (ANCHO_BLOQUE + MARGEN_BLOQUE)
+                fila = pos[1] // (ALTO_BLOQUE + MARGEN_BLOQUE)
+                grid[fila][columna] = 1
+                
+            elif evento.type == pygame.MOUSEBUTTONUP:
+                pos = pygame.mouse.get_pos()
+                columna = pos[0] // (ANCHO_BLOQUE + MARGEN_BLOQUE)
+                fila = pos[1] // (ALTO_BLOQUE + MARGEN_BLOQUE)
+                grid[fila][columna] = 0
+
+        pantalla.fill(NEGRO)
+
+        for fila in range(100):
+            for columna in range(100):
+                if grid[fila][columna] == 1:
+                    pantalla.blit(PASTO, (((MARGEN_BLOQUE + ANCHO_BLOQUE) * columna + MARGEN_BLOQUE), ((MARGEN_BLOQUE + ALTO_BLOQUE) * fila + MARGEN_BLOQUE)))
+                    PASTO_RECT = PASTO.get_rect()
+                    pantalla.blit(PASTO, PASTO_RECT)
+                elif grid[fila][columna] == 0:
+                    pantalla.blit(TIERRA, (((MARGEN_BLOQUE + ANCHO_BLOQUE) * columna + MARGEN_BLOQUE), ((MARGEN_BLOQUE + ALTO_BLOQUE) * fila + MARGEN_BLOQUE)))
+                    TIERRA_RECT = TIERRA.get_rect()
+                    pantalla.blit(TIERRA, TIERRA_RECT)
+
+        reloj.tick(100)
+        pygame.display.flip()
+
+    pygame.quit()
