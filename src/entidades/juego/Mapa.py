@@ -1,27 +1,37 @@
 import pygame
 
+from .Bloque import Bloque
+
+
+pygame.init()
+
+NEGRO = (0, 0, 0)
+BLANCO = (255, 255, 255)
+VERDE = ( 0, 255, 0)
+ROJO = (255, 0, 0)
+
 class Mapa:
-    pygame.init()
 
-    ANCHO_PANTALLA: int = pygame.display.Info().current_w
-    ALTO_PANTALLA: int = pygame.display.Info().current_h
+    def __init__(self):
+        self.ancho_pantalla = pygame.display.Info().current_w
+        self.alto_pantalla = pygame.display.Info().current_h
+        self.bloque = Bloque()
 
-    NEGRO = (0, 0, 0)
-    BLANCO = (255, 255, 255)
-    VERDE = ( 0, 255, 0)
-    ROJO = (255, 0, 0)
+    def get_ancho_pantalla(self):
+        return self.ancho_pantalla
 
-    ANCHO_BLOQUE  = 45
-    ALTO_BLOQUE = 45
-    MARGEN_BLOQUE = 1
+    def get_alto_pantalla(self):
+        return self.alto_pantalla
 
-    CANTIDAD_FILAS: int = ANCHO_PANTALLA // ANCHO_BLOQUE
-    CANTIDAD_COLUMNAS: int = ALTO_PANTALLA // ALTO_BLOQUE
 
-    PASTO = pygame.image.load("assets/relieves/pasto.png")
-    PASTO = pygame.transform.scale(PASTO, (ALTO_BLOQUE, ANCHO_BLOQUE))
-    TIERRA = pygame.image.load("assets/relieves/tierra.png")
-    TIERRA = pygame.transform.scale(TIERRA, (ALTO_BLOQUE, ANCHO_BLOQUE))
+    def calcular_filas(self):
+        cantidad_filas = self.get_ancho_pantalla // Bloque.get_ancho_bloque
+        return cantidad_filas
+
+    def calcular_columnas(self):
+        cantidad_columnas = self.get_alto_pantalla // Bloque.get_alto_bloque
+        return cantidad_columnas
+
 
     grid = []
 
@@ -29,9 +39,10 @@ class Mapa:
         grid.append([])
         for columna in range(100):
             grid[fila].append(1)
+
     grid[0][0] = 1
 
-    DIMENSION_VENTANA = [ANCHO_PANTALLA, ALTO_PANTALLA]
+    DIMENSION_VENTANA = [get_ancho_pantalla, get_alto_pantalla]
     pantalla = pygame.display.set_mode(DIMENSION_VENTANA)
     pygame.display.set_caption("Mapa")
 
@@ -39,34 +50,27 @@ class Mapa:
     reloj = pygame.time.Clock()
 
     while bucle:
-        for evento in pygame.event.get(): 
-            if evento.type == pygame.QUIT: 
-                bucle = False
-
-            elif evento.type == pygame.MOUSEBUTTONDOWN:
-                pos = pygame.mouse.get_pos()
-                columna = pos[0] // (ANCHO_BLOQUE + MARGEN_BLOQUE)
-                fila = pos[1] // (ALTO_BLOQUE + MARGEN_BLOQUE)
-                grid[fila][columna] = 1
-                
-            elif evento.type == pygame.MOUSEBUTTONUP:
-                pos = pygame.mouse.get_pos()
-                columna = pos[0] // (ANCHO_BLOQUE + MARGEN_BLOQUE)
-                fila = pos[1] // (ALTO_BLOQUE + MARGEN_BLOQUE)
-                grid[fila][columna] = 0
-
+        pygame.mouse.set_visible(not bucle)
         pantalla.fill(NEGRO)
 
-        for fila in range(100):
-            for columna in range(100):
+        for fila in range(calcular_filas()*2):
+            for columna in range(calcular_columnas()*2):
+
                 if grid[fila][columna] == 1:
-                    pantalla.blit(PASTO, (((MARGEN_BLOQUE + ANCHO_BLOQUE) * columna + MARGEN_BLOQUE), ((MARGEN_BLOQUE + ALTO_BLOQUE) * fila + MARGEN_BLOQUE)))
-                    PASTO_RECT = PASTO.get_rect()
-                    pantalla.blit(PASTO, PASTO_RECT)
-                elif grid[fila][columna] == 0:
-                    pantalla.blit(TIERRA, (((MARGEN_BLOQUE + ANCHO_BLOQUE) * columna + MARGEN_BLOQUE), ((MARGEN_BLOQUE + ALTO_BLOQUE) * fila + MARGEN_BLOQUE)))
-                    TIERRA_RECT = TIERRA.get_rect()
-                    pantalla.blit(TIERRA, TIERRA_RECT)
+                    pantalla.blit(Bloque.PASTO, (
+                        ((Bloque.get_margen_bloque + Bloque.get_ancho_bloque) * columna + Bloque.get_margen_bloque),
+                        ((Bloque.get_margen_bloque + Bloque.get_alto_bloque) * fila + Bloque.get_margen_bloque)))
+
+                    PASTO_RECT = Bloque.PASTO.get_rect()
+                    pantalla.blit(Bloque.PASTO, PASTO_RECT)
+
+                elif grid[fila][columna] == 2:
+                    pantalla.blit(Bloque.ARBOL, (
+                        ((Bloque.get_margen_bloque + Bloque.get_ancho_bloque) * columna + Bloque.get_margen_bloque), 
+                        ((Bloque.get_margen_bloque + Bloque.get_alto_bloque) * fila + Bloque.get_margen_bloque)))
+
+                    ARBOL_RECT = Bloque.ARBOL.get_rect()
+                    pantalla.blit(Bloque.ARBOL, ARBOL_RECT)
 
         reloj.tick(100)
         pygame.display.flip()
