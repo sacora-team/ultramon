@@ -1,11 +1,12 @@
 import pygame
-from constantes.colores import Colores
 
-class Pantalla:
-    def __init__(self):
+
+class Pantalla(pygame.Surface):
+    def __init__(self) -> None:
         self.ancho_pantalla = pygame.display.Info().current_w
         self.alto_pantalla = pygame.display.Info().current_h
-        self.color_fondo = pygame.fill(Colores.NEGRO)
+        self.color_fondo = (0,0,0)
+        super().__init__((self.get_ancho_pantalla(), self.get_alto_pantalla()))
 
     def get_ancho_pantalla(self):
         return self.ancho_pantalla
@@ -18,5 +19,3 @@ class Pantalla:
 
     def dimension_pantalla(self):
         return (self.get_ancho_pantalla(), self.get_alto_pantalla())
-
-PANTALLA = Pantalla()

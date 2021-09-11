@@ -19,3 +19,15 @@ class Bloque:
 
     def get_margen_bloque(self):
         return self.margen_bloque
+
+    def get_bloque_pasto(self):
+        return self.pasto
+
+    def get_bloque_tierra(self):
+        return self.tierra
+
+    def get_bloque_agua(self):
+        return self.agua
+
+    def get_bloque_arbol(self):
+        return self.arbol
