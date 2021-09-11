@@ -27,8 +27,8 @@ class ControllerBase:
         self.seleccionar: bool = False
         self.atras: bool = False
 
-    # Cualquier codigo que se quiera ejecutar al inicializar la instancia
     def onInicializarController(self) -> None:
+        """ Codigo que se ejecutaria al inicializar la instancia """
         raise NotImplementedError
 
     def getEjecutandose(self) -> bool:
@@ -46,12 +46,12 @@ class ControllerBase:
     def iniciarJuego(self) -> None:
         self.loop()
 
-    # Codigo que se ejecutaria durante el ciclo de vida entero de la instancia
     def loop(self) -> None:
+        """ Codigo que se ejecutaria durante el ciclo de vida entero de la instancia """
         raise NotImplementedError
 
-    # Lee que teclas se presionan
     def chequearEventos(self) -> None:
+        """ Lee que teclas se presionan """
         for evento in event.get():
             if evento.type == QUIT:
                 self.setEjecutandose(False)

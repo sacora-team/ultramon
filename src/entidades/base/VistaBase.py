@@ -2,6 +2,7 @@ from pygame import display, image, Surface, transform, font, mouse
 
 from ...constantes.colores import Colores
 
+
 class VistaBase:
     def __init__(self) -> None:
         self.preInitWindow()
