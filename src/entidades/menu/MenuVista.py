@@ -1,10 +1,12 @@
-from ..base.ViewBase import ViewBase
+from ..base.VistaBase import VistaBase
 
 
-class MenuView(ViewBase):
+class MenuVista(VistaBase):
     def __init__(self) -> None:
         super().__init__()
         self.renderizado: bool = False
+        
+        # Cuan a la izquierda esta la flecha
         self.offsetFlecha: int = -100
         self.alturasFlecha: dict[str, int] = {
             "JUGAR": self.getAlto() // 3 - 60,

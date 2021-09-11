@@ -6,10 +6,10 @@ from .constantes.estadosJuego import EstadosJuego
 class AppController(ControllerBase):
     def __init__(self) -> None:
         super().__init__()
-        self.initController()
+        self.onInicializarController()
         self.menuPrincipal: MenuController = MenuController()
     
-    def initController(self):
+    def onInicializarController(self) -> None:
         mixer.Channel(0).play(mixer.Sound("./assets/sonidos/opening.wav"))
     
     def getMenuPrincipal(self) -> MenuController:
