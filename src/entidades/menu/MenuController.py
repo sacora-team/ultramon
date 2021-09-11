@@ -8,7 +8,6 @@ from .EstadosFlecha import EstadosFlecha
 class MenuController(ControllerBase):
     def __init__(self) -> None:
         super().__init__()
-        self.activado: bool = False
         self.view = MenuVista()
         self.entidad = Menu()
 
@@ -17,12 +16,6 @@ class MenuController(ControllerBase):
 
     def getEntidad(self) -> Menu:
         return self.entidad
-
-    def getActivado(self) -> bool:
-        return self.activado
-
-    def setActivado(self, activado: bool) -> None:
-        self.activado = activado
 
     def loop(self) -> None:
         self.getView().renderizarMenuPrincipal(EstadosFlecha.JUGAR)
