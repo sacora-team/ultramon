@@ -2,12 +2,12 @@ from pygame import display, image, Surface, transform, font, mouse
 
 from ...constantes.colores import Colores
 
-class ViewBase:
+class VistaBase:
     def __init__(self) -> None:
         self.preInitWindow()
         self.anchoDisplay: int = display.Info().current_w
         self.altoDisplay: int = display.Info().current_h
-        self.font: str = "./assets/fonts/pokemon_fire_red.ttf"
+        self.fuente: str = "./assets/fonts/pokemon_fire_red.ttf"
         self.window = display.set_mode((self.getAncho(), self.getAlto()))
         self.colores: Colores = Colores
 
@@ -28,8 +28,8 @@ class ViewBase:
     def getAlto(self) -> int:
         return self.altoDisplay
 
-    def getFont(self) -> str:
-        return self.font
+    def getFuente(self) -> str:
+        return self.fuente
 
     def renderizarImagen(self, url: str, x: int, y: int, escala: tuple[int] = None) -> None:
         imagen = image.load(url)
@@ -39,7 +39,7 @@ class ViewBase:
         display.update()
 
     def renderizarTexto(self, texto: str, size: int, color: tuple[int], x: int, y: int) -> None:
-        typography = font.Font(self.getFont(), size)
+        typography = font.Font(self.getFuente(), size)
         self.getWindow().blit(typography.render(texto, True, color), (x, y))
         display.update()
         

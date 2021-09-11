@@ -1,16 +1,16 @@
 from pygame import quit
 from ..base.ControllerBase import ControllerBase
-from .MenuView import MenuView
+from .MenuVista import MenuVista
 
 
 class MenuController(ControllerBase):
     def __init__(self) -> None:
         super().__init__()
         self.activado: bool = False
-        self.view = MenuView()
+        self.view = MenuVista()
         self.estadoFlecha = "JUGAR"
 
-    def getView(self) -> MenuView:
+    def getView(self) -> MenuVista:
         return self.view
 
     def getActivado(self) -> bool:
@@ -29,19 +29,20 @@ class MenuController(ControllerBase):
         self.getView().renderizarMenuPrincipal("JUGAR")
         while self.getActivado():
             self.chequearEventos()
-            if self.getUpKey():
+            if self.getArriba():
                 self.moverFlecha("ARRIBA")
                 self.resetearKeys()
-            if self.getDownKey():
+            if self.getAbajo():
                 self.moverFlecha("ABAJO")
                 self.resetearKeys()
-            if self.getSelectKey():
+            if self.getSeleccionar():
                 self.resetearKeys()
                 if self.getEstadoFlecha() == "SALIR":
                     quit()
                 elif self.getEstadoFlecha() == "JUGAR":
                     self.setActivado(False)
 
+    # Cambia el estado de la flecha dependiendo de su estado actual
     def moverFlecha(self, movimiento: str):
         if movimiento.upper() == "ARRIBA":
             if self.getEstadoFlecha() == "JUGAR":
@@ -55,6 +56,7 @@ class MenuController(ControllerBase):
                 self.setEstadoFlecha("JUGAR")
         self.getView().renderizarMenuPrincipal(self.getEstadoFlecha())
 
+    # Se activa el ciclo de vida de la instancia
     def activar(self) -> None:
         self.setActivado(True)
         self.loop()

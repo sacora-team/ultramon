@@ -1,7 +1,6 @@
 from pygame import (
     init,
     event,
-    mixer,
     QUIT,
     KEYDOWN,
     K_RETURN,
@@ -14,24 +13,23 @@ from pygame import (
 
 from ...constantes.estadosJuego import EstadosJuego
 
+
 class ControllerBase:
     def __init__(self) -> None:
         init()
-        self.initController()
         self.ejecutandose: bool = True
         self.estado: int = EstadosJuego.MENU
         self.estados: EstadosJuego = EstadosJuego
-        self.upKey: bool = False
-        self.downKey: bool = False
-        self.leftKey: bool = False
-        self.rightKey: bool = False
-        self.selectKey: bool = False
-        self.backKey: bool = False
+        self.arriba: bool = False
+        self.abajo: bool = False
+        self.izquierda: bool = False
+        self.derecha: bool = False
+        self.seleccionar: bool = False
+        self.atras: bool = False
 
-    def initController(self):
-        # TODO: Verificar por que en linux tira 'pygame.error: Unable to open file'   
-        # mixer.Channel(0).play(mixer.Sound("./assets/sonidos/opening.mp3"))
-        pass
+    # Cualquier codigo que se quiera ejecutar al inicializar la instancia
+    def onInicializarController(self) -> None:
+        raise NotImplementedError
 
     def getEjecutandose(self) -> bool:
         return self.ejecutandose
@@ -48,70 +46,72 @@ class ControllerBase:
     def iniciarJuego(self) -> None:
         self.loop()
 
+    # Codigo que se ejecutaria durante el ciclo de vida entero de la instancia
     def loop(self) -> None:
         raise NotImplementedError
 
+    # Lee que teclas se presionan
     def chequearEventos(self) -> None:
         for evento in event.get():
             if evento.type == QUIT:
                 self.setEjecutandose(False)
             if evento.type == KEYDOWN:
                 if evento.key == K_RETURN:
-                    self.setSelectKey(True)
+                    self.setSeleccionar(True)
                 if evento.key == K_ESCAPE:
-                    self.setPauseKey(True)
+                    self.setAtras(True)
                 if evento.key == K_DOWN:
-                    self.setDownKey(True)
+                    self.setAbajo(True)
                 if evento.key == K_UP:
-                    self.setUpKey(True)
+                    self.setArriba(True)
                 if evento.key == K_LEFT:
-                    self.setLeftKey(True)
+                    self.setIzquierda(True)
                 if evento.key == K_RIGHT:
-                    self.setRightKey(True)
+                    self.setDerecha(True)
 
     def resetearKeys(self) -> None:
-        self.setUpKey(False)
-        self.setDownKey(False)
-        self.setLeftKey(False)
-        self.setRightKey(False)
-        self.setSelectKey(False)
-        self.setPauseKey(False)
+        self.setArriba(False)
+        self.setAbajo(False)
+        self.setIzquierda(False)
+        self.setDerecha(False)
+        self.setSeleccionar(False)
+        self.setAtras(False)
 
     ######################
     #       TECLAS       #
     ######################
-    def setUpKey(self, estado: bool) -> None:
-        self.upKey = estado
+    def setArriba(self, estado: bool) -> None:
+        self.arriba = estado
 
-    def setDownKey(self, estado: bool) -> None:
-        self.downKey = estado
+    def setAbajo(self, estado: bool) -> None:
+        self.abajo = estado
 
-    def setLeftKey(self, estado: bool) -> None:
-        self.leftKey = estado
+    def setIzquierda(self, estado: bool) -> None:
+        self.izquierda = estado
 
-    def setRightKey(self, estado: bool) -> None:
-        self.rightKey = estado
+    def setDerecha(self, estado: bool) -> None:
+        self.derecha = estado
 
-    def setSelectKey(self, estado: bool) -> None:
-        self.selectKey = estado
+    def setSeleccionar(self, estado: bool) -> None:
+        self.seleccionar = estado
 
-    def setPauseKey(self, estado: bool) -> None:
-        self.backKey = estado
+    def setAtras(self, estado: bool) -> None:
+        self.atras = estado
 
-    def getUpKey(self) -> bool:
-        return self.upKey
+    def getArriba(self) -> bool:
+        return self.arriba
 
-    def getDownKey(self) -> bool:
-        return self.downKey
+    def getAbajo(self) -> bool:
+        return self.abajo
 
-    def getLeftKey(self) -> bool:
-        return self.leftKey
+    def getIzquierda(self) -> bool:
+        return self.izquierda
 
-    def getRightKey(self) -> bool:
-        return self.rightKey
+    def getDerecha(self) -> bool:
+        return self.derecha
 
-    def getSelectKey(self) -> bool:
-        return self.selectKey
+    def getSeleccionar(self) -> bool:
+        return self.seleccionar
 
-    def getPauseKey(self) -> bool:
-        return self.backKey
+    def getAtras(self) -> bool:
+        return self.atras
