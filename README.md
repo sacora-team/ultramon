@@ -4,7 +4,7 @@ Juego tipo RPG de peleas entre pokemones.
 
 ## Requerimientos:
 
-Python instalado globalmente y agregado al PATH.
+Python 3.9.1+ instalado globalmente y agregado al PATH.
 
 ## Formatear archivos python
 
@@ -14,13 +14,14 @@ Python instalado globalmente y agregado al PATH.
 
 ### Descargar / clonar repositorio y, en el directorio root:
 
-#### Windows:
+#### Windows (PowerShell):
 
-Ejecutar con powershell(Desde la consola o haciendo doble click) en el archivo UltramonWindows
+`Set ExecutionPolicy -scope CurrentUser RemoteSigned`
 
+`.\runWindows.ps1`
 
 #### Linux / macOS:
 
-Hacer un bash de UltramonLinux
+`chmod +x runLinux.sh`
 
-ej: bash /home/mint/ultramon/UltramonLinux.sh
+`./runLinux.sh`
