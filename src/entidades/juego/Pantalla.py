@@ -11,6 +11,5 @@ class Pantalla:
     def get_alto_pantalla(self):
         return self.alto_pantalla
 
-    def dimension_pantalla(self, get_ancho_pantalla, get_alto_pantalla):
-        dimension_pantalla = get_ancho_pantalla * get_alto_pantalla
-        return dimension_pantalla
+    def dimension_pantalla(self):
+        return (self.get_ancho_pantalla(), self.get_alto_pantalla())
