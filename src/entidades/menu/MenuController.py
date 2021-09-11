@@ -1,6 +1,8 @@
 from pygame import quit
 from ..base.ControllerBase import ControllerBase
 from .MenuVista import MenuVista
+from .Menu import Menu
+from .EstadosFlecha import EstadosFlecha
 
 
 class MenuController(ControllerBase):
@@ -8,10 +10,13 @@ class MenuController(ControllerBase):
         super().__init__()
         self.activado: bool = False
         self.view = MenuVista()
-        self.estadoFlecha = "JUGAR"
+        self.entidad = Menu()
 
     def getView(self) -> MenuVista:
         return self.view
+
+    def getEntidad(self) -> Menu:
+        return self.entidad
 
     def getActivado(self) -> bool:
         return self.activado
@@ -19,44 +24,28 @@ class MenuController(ControllerBase):
     def setActivado(self, activado: bool) -> None:
         self.activado = activado
 
-    def getEstadoFlecha(self):
-        return self.estadoFlecha
-
-    def setEstadoFlecha(self, estado: str):
-        self.estadoFlecha = estado.upper()
-
     def loop(self) -> None:
-        self.getView().renderizarMenuPrincipal("JUGAR")
+        self.getView().renderizarMenuPrincipal(EstadosFlecha.JUGAR)
         while self.getActivado():
             self.chequearEventos()
             if self.getArriba():
-                self.moverFlecha("ARRIBA")
+                self.moverFlecha(self.getEntidad().getDirecciones().ARRIBA)
                 self.resetearKeys()
             if self.getAbajo():
-                self.moverFlecha("ABAJO")
+                self.moverFlecha(self.getEntidad().getDirecciones().ARRIBA)
                 self.resetearKeys()
             if self.getSeleccionar():
                 self.resetearKeys()
-                if self.getEstadoFlecha() == "SALIR":
+                if self.getEntidad().getEstadoFlecha() == EstadosFlecha.SALIR:
                     quit()
-                elif self.getEstadoFlecha() == "JUGAR":
+                elif self.getEntidad().getEstadoFlecha() == EstadosFlecha.JUGAR:
                     self.setActivado(False)
 
-    # Cambia el estado de la flecha dependiendo de su estado actual
-    def moverFlecha(self, movimiento: str):
-        if movimiento.upper() == "ARRIBA":
-            if self.getEstadoFlecha() == "JUGAR":
-                self.setEstadoFlecha("SALIR")
-            elif self.getEstadoFlecha() == "SALIR":
-                self.setEstadoFlecha("JUGAR")
-        elif movimiento.upper() == "ABAJO":
-            if self.getEstadoFlecha() == "JUGAR":
-                self.setEstadoFlecha("SALIR")
-            elif self.getEstadoFlecha() == "SALIR":
-                self.setEstadoFlecha("JUGAR")
-        self.getView().renderizarMenuPrincipal(self.getEstadoFlecha())
+    def moverFlecha(self, direccion: int):
+        self.getEntidad().moverFlecha(direccion)
+        self.getView().renderizarMenuPrincipal(self.getEntidad().getEstadoFlecha())
 
-    # Se activa el ciclo de vida de la instancia
     def activar(self) -> None:
+        """ Se activa el ciclo de vida de la instancia """
         self.setActivado(True)
         self.loop()

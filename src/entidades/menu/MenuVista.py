@@ -1,5 +1,5 @@
 from ..base.VistaBase import VistaBase
-
+from .EstadosFlecha import EstadosFlecha
 
 class MenuVista(VistaBase):
     def __init__(self) -> None:
@@ -8,15 +8,15 @@ class MenuVista(VistaBase):
         
         # Cuan a la izquierda esta la flecha
         self.offsetFlecha: int = -100
-        self.alturasFlecha: dict[str, int] = {
-            "JUGAR": self.getAlto() // 3 - 60,
-            "SALIR": self.getAlto() // 2 - 40,
+        self.alturasFlecha: dict[int, int] = {
+            EstadosFlecha.JUGAR: self.getAlto() // 3 - 60,
+            EstadosFlecha.SALIR: self.getAlto() // 2 - 40,
         }
 
     def getEstado(self) -> bool:
         return self.renderizado
 
-    def setEstado(self, estado: bool):
+    def setEstado(self, estado: bool) -> None:
         self.renderizado = estado
 
     def getOffsetFlecha(self) -> int:
@@ -25,10 +25,7 @@ class MenuVista(VistaBase):
     def getAlturasFlecha(self) -> dict[str, int]:
         return self.alturasFlecha
 
-    def setAlturaFlechaActual(self, altura: str) -> None:
-        self.alturaFlechaActual = altura
-
-    def renderizarMenuPrincipal(self, alturaFlecha: str) -> None:
+    def renderizarMenuPrincipal(self, alturaFlecha: int) -> None:
         self.renderizarImagen(
             "assets/fondos/fondo1.png", 0, 0, (self.getAncho(), self.getAlto())
         )
@@ -39,7 +36,7 @@ class MenuVista(VistaBase):
             (150, 100),
         )
 
-        if alturaFlecha == "JUGAR":
+        if alturaFlecha == EstadosFlecha.JUGAR:
             self.renderizarImagen(
                 "assets/menu/imagenesMenu/jugarEstado2.png",
                 self.getAncho() // 2 - 200,
@@ -52,7 +49,7 @@ class MenuVista(VistaBase):
                 self.getAlto() // 2 - 90,
                 (400, 200),
             )
-        elif alturaFlecha == "SALIR":
+        elif alturaFlecha == EstadosFlecha.SALIR:
             self.renderizarImagen(
                 "assets/menu/imagenesMenu/jugarEstado1.png",
                 self.getAncho() // 2 - 200,
