@@ -17,7 +17,6 @@ from ...constantes.estadosJuego import EstadosJuego
 class ControllerBase:
     def __init__(self) -> None:
         init()
-        self.initController()
         self.ejecutandose: bool = True
         self.estado: int = EstadosJuego.MENU
         self.estados: EstadosJuego = EstadosJuego
@@ -27,11 +26,6 @@ class ControllerBase:
         self.rightKey: bool = False
         self.selectKey: bool = False
         self.backKey: bool = False
-
-    def initController(self):
-        # TODO: Verificar por que en linux tira 'pygame.error: Unable to open file'   
-        # mixer.Channel(0).play(mixer.Sound("./assets/sonidos/opening.mp3"))
-        pass
 
     def getEjecutandose(self) -> bool:
         return self.ejecutandose
