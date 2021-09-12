@@ -16,12 +16,20 @@ Python 3.9.1+ instalado globalmente y agregado al PATH.
 
 #### Windows (PowerShell):
 
-`Set ExecutionPolicy -scope CurrentUser RemoteSigned`
+`Set ExecutionPolicy -scope CurrentUser RemoteSigned` (ejecutar una sola vez)
 
 `.\runWindows.ps1`
 
-#### Linux / macOS:
+#### Linux:
 
-`chmod +x runLinux.sh`
+`chmod +x runLinux.sh` (ejecutar una sola vez)
 
 `./runLinux.sh`
+
+#### macOS:
+
+`chmod +x installMac.zsh runMac.zsh` (ejecutar una sola vez)
+
+`./installMac.zsh` (ejecutar una sola vez)
+
+`./runMac.zsh`
