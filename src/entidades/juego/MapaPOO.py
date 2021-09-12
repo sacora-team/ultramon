@@ -7,8 +7,8 @@ class Mapa:
         self.ancho_pantalla: int = pygame.display.Info().current_w
         self.alto_pantalla: int = pygame.display.Info().current_h
 
-        self.ancho_bloque: int = 45
-        self.alto_bloque: int = 45
+        self.ancho_bloque: int = 40
+        self.alto_bloque: int = 40
         self.margen_bloque: int = 1
 
         self.cantidad_filas: int = self.ancho_pantalla // self.ancho_bloque
@@ -48,7 +48,6 @@ TIERRA = pygame.image.load("assets/relieves/tierra.png")
 TIERRA = pygame.transform.scale(TIERRA, (mapa.get_ancho_bloque(), mapa.get_alto_bloque()))
 
 grid = []
-
 for fila in range(100):
     grid.append([])
     for columna in range(100):
