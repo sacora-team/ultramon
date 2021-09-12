@@ -6,6 +6,8 @@ Juego tipo RPG de peleas entre pokemones.
 
 Python 3.9.1+ instalado globalmente y agregado al PATH.
 
+(macOS) Homebrew instalado globalmente y agregado al PATH.
+
 ## Formatear archivos python
 
 `black [path a archivo o directorio]`
