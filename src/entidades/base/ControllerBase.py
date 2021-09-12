@@ -17,6 +17,7 @@ from ...constantes.estadosJuego import EstadosJuego
 class ControllerBase:
     def __init__(self) -> None:
         init()
+        self.activado: bool = False
         self.ejecutandose: bool = True
         self.estado: int = EstadosJuego.MENU
         self.estados: EstadosJuego = EstadosJuego
@@ -42,6 +43,12 @@ class ControllerBase:
 
     def setEstado(self, estado: int) -> None:
         self.estado = estado
+        
+    def getActivado(self) -> bool:
+        return self.activado
+
+    def setActivado(self, activado: bool) -> None:
+        self.activado = activado
 
     def iniciarJuego(self) -> None:
         self.loop()
