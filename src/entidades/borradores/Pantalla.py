@@ -1,6 +1,5 @@
 import pygame
 
-
 class Pantalla(pygame.Surface):
     def __init__(self) -> None:
         self.ancho_pantalla = pygame.display.Info().current_w
