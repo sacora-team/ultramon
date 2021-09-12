@@ -11,14 +11,14 @@ class MenuController(ControllerBase):
         self.view = MenuVista()
         self.entidad = Menu()
 
-    def getView(self) -> MenuVista:
+    def getVista(self) -> MenuVista:
         return self.view
 
     def getEntidad(self) -> Menu:
         return self.entidad
 
     def loop(self) -> None:
-        self.getView().renderizarMenuPrincipal(EstadosFlecha.JUGAR)
+        self.getVista().renderizarMenuPrincipal(EstadosFlecha.JUGAR)
         while self.getActivado():
             self.chequearEventos()
             if self.getArriba():
@@ -36,7 +36,7 @@ class MenuController(ControllerBase):
 
     def moverFlecha(self, direccion: int):
         self.getEntidad().moverFlecha(direccion)
-        self.getView().renderizarMenuPrincipal(self.getEntidad().getEstadoFlecha())
+        self.getVista().renderizarMenuPrincipal(self.getEntidad().getEstadoFlecha())
 
     def activar(self) -> None:
         """ Se activa el ciclo de vida de la instancia """
