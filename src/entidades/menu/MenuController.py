@@ -25,7 +25,7 @@ class MenuController(ControllerBase):
                 self.moverFlecha(self.getEntidad().getDirecciones().ARRIBA)
                 self.resetearKeys()
             if self.getAbajo():
-                self.moverFlecha(self.getEntidad().getDirecciones().ARRIBA)
+                self.moverFlecha(self.getEntidad().getDirecciones().ABAJO)
                 self.resetearKeys()
             if self.getSeleccionar():
                 self.resetearKeys()
