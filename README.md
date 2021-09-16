@@ -18,7 +18,7 @@ Python 3.9.1+ instalado globalmente y agregado al PATH.
 
 #### Windows (PowerShell):
 
-`Set ExecutionPolicy -scope CurrentUser RemoteSigned` (ejecutar una sola vez)
+`Set-ExecutionPolicy -scope CurrentUser RemoteSigned` (ejecutar una sola vez)
 
 `.\runWindows.ps1`
 
