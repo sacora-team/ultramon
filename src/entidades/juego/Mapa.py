@@ -39,37 +39,52 @@ class Mapa:
 
 mapa = Mapa()
 
+pantalla = pygame.display.set_mode(mapa.get_dimension_pantalla())
+pygame.display.set_caption("Ultramon")
+
+bucle = True
+reloj = pygame.time.Clock()
+
+#### PASTO  ####
 PASTO = pygame.image.load("assets/relieves/pasto.png")
 PASTO = pygame.transform.scale(PASTO, (mapa.get_ancho_bloque(), mapa.get_alto_bloque()))
 PASTO_TXT = "PASTO"
 
+#### TIERRA  ####
 TIERRA = pygame.image.load("assets/relieves/tierra.png")
 TIERRA = pygame.transform.scale(TIERRA, (mapa.get_ancho_bloque(), mapa.get_alto_bloque()))
 TIERRA_TXT = "TIERRA"
 
+#### AGUA  ####
 AGUA = pygame.image.load("assets/relieves/agua.png")
 AGUA = pygame.transform.scale(AGUA, (mapa.get_ancho_bloque(), mapa.get_alto_bloque()))
 AGUA_TXT = "AGUA"
 
+#### PIEDRA  ####
 PIEDRA = pygame.image.load("assets/ambiente/piedra.png")
 PIEDRA = pygame.transform.scale(PIEDRA, (mapa.get_ancho_bloque(), mapa.get_alto_bloque()))
 PIEDRA_TXT = "PIEDRA"
 
+#### ARBOL  ####
 ARBOL = pygame.image.load("assets/ambiente/arbol.png")
 ARBOL = pygame.transform.scale(ARBOL, (mapa.get_ancho_bloque(), mapa.get_alto_bloque()))
 ARBOL_TXT = "ARBOL"
 
+#### FUENTE  ####
 FUENTE = pygame.image.load("assets/ambiente/fuente.png")
 FUENTE = pygame.transform.scale(FUENTE, (mapa.get_ancho_bloque(), mapa.get_alto_bloque()))
 FUENTE_TXT = "FUENTE"
 
+#### GRILLA ####
 grid = []
 
+#### PASTO -DEFINIR POSICION DE BLOQUES DE PASTO- ####
 for fila in range(0, mapa.get_cantidad_filas()):
     grid.append([])
     for columna in range(0, mapa.get_cantidad_columnas()):
         grid[fila].append("PASTO")
 
+#### AGUA -DEFINIR POSICION DE BLOQUES DE AGUA- ####
 for fila in range(1, 2):
     for columna in range(0, mapa.get_cantidad_columnas()):
         grid[fila][columna] = "AGUA"
@@ -78,6 +93,7 @@ for fila in range(12, 13):
     for columna in range(0, mapa.get_cantidad_columnas()):
         grid[fila][columna] = "AGUA"
 
+#### ARBOL -DEFINIR POSICION DE BLOQUES DE ARBOL- ####
 for fila in range(0, 1):
     for columna in range(0, mapa.get_cantidad_columnas()):
         grid[fila][columna] = "ARBOL"
@@ -86,15 +102,8 @@ for fila in range(13, 14):
     for columna in range(0, mapa.get_cantidad_columnas()):
         grid[fila][columna] = "ARBOL"
 
+#### FUENTE -DEFINIR POSICION DE BLOQUES DE PASTO- ####
 grid[mapa.get_cantidad_filas() // 2][mapa.get_cantidad_columnas() // 2] = "FUENTE"
-
-
-pantalla = pygame.display.set_mode(mapa.get_dimension_pantalla())
-pygame.display.set_caption("Ultramon")
-
-bucle = True
-reloj = pygame.time.Clock()
-
 
 while bucle:
     for evento in pygame.event.get(): 
@@ -106,7 +115,8 @@ while bucle:
     for fila in range(0, mapa.get_cantidad_filas()):
         for columna in range(0, mapa.get_cantidad_columnas()):
 
-            if grid[fila][columna] == "PASTO":
+            #### PASTO -DIBUJAR BLOQUES DE PASTO- ####
+            if grid[fila][columna] == PASTO_TXT:
                 pantalla.blit(PASTO, (
                     ((mapa.get_ancho_bloque()) * columna),
                     ((mapa.get_alto_bloque()) * fila))
@@ -115,7 +125,8 @@ while bucle:
                 PASTO_RECT = PASTO.get_rect()
                 pantalla.blit(PASTO, PASTO_RECT)
 
-            elif grid[fila][columna] == "TIERRA":
+            #### TIERRA -DIBUJAR BLOQUES DE TIERRA- ####
+            elif grid[fila][columna] == TIERRA_TXT:
                 pantalla.blit(TIERRA, (
                     ((mapa.get_ancho_bloque()) * columna),
                     ((mapa.get_alto_bloque()) * fila))
@@ -124,7 +135,8 @@ while bucle:
                 TIERRA_RECT = TIERRA.get_rect()
                 pantalla.blit(TIERRA, TIERRA_RECT)
 
-            elif grid[fila][columna] == "AGUA":
+            #### AGUA -DIBUJAR BLOQUES DE AGUA- ####
+            elif grid[fila][columna] == AGUA_TXT:
                 pantalla.blit(AGUA, (
                     ((mapa.get_ancho_bloque()) * columna),
                     ((mapa.get_alto_bloque()) * fila))
@@ -133,7 +145,8 @@ while bucle:
                 AGUA_RECT = AGUA.get_rect()
                 pantalla.blit(AGUA, AGUA_RECT)
 
-            if grid[fila][columna] == "ARBOL":
+            #### ARBOL -DIBUJAR BLOQUES DE ARBOL- ####
+            if grid[fila][columna] == ARBOL_TXT:
                 pantalla.blit(ARBOL, (
                     ((mapa.get_ancho_bloque()) * columna),
                     ((mapa.get_alto_bloque()) * fila))
@@ -142,7 +155,8 @@ while bucle:
                 ARBOL_RECT = ARBOL.get_rect()
                 pantalla.blit(ARBOL, ARBOL_RECT)
 
-            elif grid[fila][columna] == "FUENTE":
+            #### FUENTE -DIBUJAR BLOQUES DE FUENTE- ####
+            elif grid[fila][columna] == FUENTE_TXT:
                 pantalla.blit(FUENTE, (
                     ((mapa.get_ancho_bloque()) * columna),
                     ((mapa.get_alto_bloque()) * fila))
