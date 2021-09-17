@@ -5,3 +5,4 @@ class Bloques:
     ARBOL = 4
     FUENTE = 5
     TIERRA = 6
+    PERSONAJE = 7

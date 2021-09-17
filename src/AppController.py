@@ -2,6 +2,7 @@ from pygame import mixer
 
 from .AppVista import AppVista
 from .constantes.habitaciones import Habitaciones
+from .constantes.direcciones import Direcciones
 from .entidades.base.ControllerBase import ControllerBase
 from .entidades.menu.MenuController import MenuController
 from .entidades.personaje.PersonajeController import PersonajeController
@@ -35,3 +36,17 @@ class AppController(ControllerBase):
             if self.getEstado() == EstadosJuego.JUEGO:
                 self.getVista().definirHabitacion(Habitaciones.HALL)
                 self.getVista().renderizarHabitacion(Habitaciones.HALL)
+                self.chequearEventos()
+                if self.getArriba():
+                    self.getVista().moverPersonajeConVerificacion(Direcciones.ARRIBA)
+                    self.resetearKeys()
+                if self.getAbajo():
+                    self.getVista().moverPersonajeConVerificacion(Direcciones.ABAJO)
+                    self.resetearKeys()
+                if self.getIzquierda():
+                    self.getVista().moverPersonajeConVerificacion(Direcciones.IZQUIERDA)
+                    self.resetearKeys()
+                if self.getDerecha():
+                    self.getVista().moverPersonajeConVerificacion(Direcciones.DERECHA)
+                    self.resetearKeys()
+                    
