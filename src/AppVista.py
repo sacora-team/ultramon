@@ -70,7 +70,7 @@ class AppVista(VistaBase):
             for fila in range(12, 13):
                 for columna in range(0, self.getCantidadColumnas()):
                     self.getMapa()[fila][columna] = Bloques.AGUA
-        
+
             for fila in range(0, 1):
                 for columna in range(0, self.getCantidadColumnas()):
                     self.getMapa()[fila][columna] = Bloques.ARBOL
@@ -78,8 +78,22 @@ class AppVista(VistaBase):
             for fila in range(13, 14):
                 for columna in range(0, self.getCantidadColumnas()):
                     self.getMapa()[fila][columna] = Bloques.ARBOL
-                    
+
+            for fila in range(0, self.getCantidadFilas()):
+                for columna in range(0, 1):
+                    self.getMapa()[fila][columna] = Bloques.ARBOL
+
+            for fila in range(0, self.getCantidadFilas()):
+                for columna in range(23, 24):
+                    self.getMapa()[fila][columna] = Bloques.ARBOL
+
+
             self.getMapa()[self.getCantidadFilas() // 2][self.getCantidadColumnas() // 2] = Bloques.FUENTE
+
+
+            self.getMapa()[self.getCantidadFilas() // 4][self.getCantidadColumnas() // 4] = Bloques.ARBOL
+            self.getMapa()[self.getCantidadFilas() // 3][self.getCantidadColumnas() // 3] = Bloques.ARBOL
+
         
             self.definido = True
 
