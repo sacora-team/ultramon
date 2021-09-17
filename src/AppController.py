@@ -1,5 +1,7 @@
 from pygame import mixer
 
+from .AppVista import AppVista
+from .constantes.habitaciones import Habitaciones
 from .entidades.base.ControllerBase import ControllerBase
 from .entidades.menu.MenuController import MenuController
 from .entidades.personaje.PersonajeController import PersonajeController
@@ -9,11 +11,15 @@ class AppController(ControllerBase):
     def __init__(self) -> None:
         super().__init__()
         self.onInicializarController()
+        self.vista: AppVista = AppVista()
         self.menuPrincipal: MenuController = MenuController()
         self.personaje: PersonajeController = PersonajeController()
     
     def onInicializarController(self) -> None:
         mixer.Channel(0).play(mixer.Sound("./assets/sonidos/opening.wav"))
+    
+    def getVista(self) -> AppVista:
+        return self.vista
     
     def getMenuPrincipal(self) -> MenuController:
         return self.menuPrincipal
@@ -27,4 +33,5 @@ class AppController(ControllerBase):
                 self.getMenuPrincipal().activar()
                 self.setEstado(EstadosJuego.JUEGO)
             if self.getEstado() == EstadosJuego.JUEGO:
-                self.getPersonaje().activar()
+                self.getVista().definirHabitacion(Habitaciones.HALL)
+                self.getVista().renderizarHabitacion(Habitaciones.HALL)

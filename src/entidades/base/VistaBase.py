@@ -11,6 +11,8 @@ class VistaBase:
         self.fuente: str = "./assets/fonts/pokemon_fire_red.ttf"
         self.window = display.set_mode((self.getAncho(), self.getAlto()))
         self.colores: Colores = Colores
+        self.cantidadFilas: int = 14
+        self.cantidadColumnas: int = 24
 
     def preInitWindow(self) -> None:
         display.set_icon(image.load("./assets/menu/imagenesMenu/icono.png"))
@@ -28,6 +30,12 @@ class VistaBase:
 
     def getAlto(self) -> int:
         return self.altoDisplay
+
+    def getCantidadFilas(self) -> int:
+        return self.cantidadFilas
+    
+    def getCantidadColumnas(self) -> int:
+        return self.cantidadColumnas
 
     def getFuente(self) -> str:
         return self.fuente
