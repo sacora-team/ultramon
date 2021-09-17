@@ -113,6 +113,7 @@ class AppVista(VistaBase):
     def moverPersonajeConVerificacion(self, direccion: int) -> None:
         """ Dada una direccion, verifica que sea caminable y mueve su posicion """
         if direccion == Direcciones.ABAJO:
+
             if self.getMapa()[self.getPersonaje().getFilaPersonaje() + 1][self.getPersonaje().getColumnaPersonaje()] == Bloques.PASTO:
                 self.renderizarImagenSinUpdate(self.getPasto().getSprite(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
                 self.getPersonaje().moverPersonaje(direccion)
@@ -122,6 +123,7 @@ class AppVista(VistaBase):
                 self.getPersonaje().moverPersonaje(direccion)
                 self.renderizarImagen(self.getPersonaje().getSprite(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
         elif direccion == Direcciones.ARRIBA:
+            
             if self.getMapa()[self.getPersonaje().getFilaPersonaje() - 1][self.getPersonaje().getColumnaPersonaje()] == Bloques.PASTO:
                 self.renderizarImagenSinUpdate(self.getPasto().getSprite(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
                 self.getPersonaje().moverPersonaje(direccion)
@@ -131,6 +133,7 @@ class AppVista(VistaBase):
                 self.getPersonaje().moverPersonaje(direccion)
                 self.renderizarImagen(self.getPersonaje().getSprite(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
         elif direccion == Direcciones.IZQUIERDA:
+
             if self.getMapa()[self.getPersonaje().getFilaPersonaje()][self.getPersonaje().getColumnaPersonaje() - 1] == Bloques.PASTO:
                 self.renderizarImagenSinUpdate(self.getPasto().getSprite(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
                 self.getPersonaje().moverPersonaje(direccion)
@@ -140,6 +143,7 @@ class AppVista(VistaBase):
                 self.getPersonaje().moverPersonaje(direccion)
                 self.renderizarImagen(self.getPersonaje().getSprite(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
         elif direccion == Direcciones.DERECHA:
+
             if self.getMapa()[self.getPersonaje().getFilaPersonaje()][self.getPersonaje().getColumnaPersonaje() + 1] == Bloques.PASTO:
                 self.renderizarImagenSinUpdate(self.getPasto().getSprite(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
                 self.getPersonaje().moverPersonaje(direccion)
