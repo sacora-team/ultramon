@@ -46,6 +46,12 @@ class VistaBase:
             imagen = transform.scale(imagen, escala)
         self.getWindow().blit(imagen, (x, y))
         display.update()
+        
+    def renderizarImagenSinUpdate(self, url: str, x: int, y: int, escala: tuple[int] = None) -> None:
+        imagen = image.load(url)
+        if escala:
+            imagen = transform.scale(imagen, escala)
+        self.getWindow().blit(imagen, (x, y))
 
     def renderizarTexto(self, texto: str, size: int, color: tuple[int], x: int, y: int) -> None:
         typography = font.Font(self.getFuente(), size)

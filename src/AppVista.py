@@ -1,3 +1,4 @@
+from pygame import display
 from .entidades.base.VistaBase import VistaBase
 from .constantes.habitaciones import Habitaciones
 from .constantes.bloques import Bloques
@@ -86,12 +87,13 @@ class AppVista(VistaBase):
         for fila in range(0, self.getCantidadFilas()):
             for columna in range(0, self.getCantidadColumnas()):
                 if self.getMapa()[fila][columna] == Bloques.PASTO:
-                    self.renderizarImagen(self.getPasto().getSprite(), (self.getPasto().getAnchoBloque() * columna), (self.getPasto().getAltoBloque() * fila), (self.getPasto().getAnchoBloque(), self.getPasto().getAltoBloque()))
+                    self.renderizarImagenSinUpdate(self.getPasto().getSprite(), (self.getPasto().getAnchoBloque() * columna), (self.getPasto().getAltoBloque() * fila), (self.getPasto().getAnchoBloque(), self.getPasto().getAltoBloque()))
                 if self.getMapa()[fila][columna] == Bloques.AGUA:
-                    self.renderizarImagen(self.getAgua().getSprite(), (self.getAgua().getAnchoBloque() * columna), (self.getAgua().getAltoBloque() * fila), (self.getAgua().getAnchoBloque(), self.getAgua().getAltoBloque()))
+                    self.renderizarImagenSinUpdate(self.getAgua().getSprite(), (self.getAgua().getAnchoBloque() * columna), (self.getAgua().getAltoBloque() * fila), (self.getAgua().getAnchoBloque(), self.getAgua().getAltoBloque()))
                 if self.getMapa()[fila][columna] == Bloques.ARBOL:
-                    self.renderizarImagen(self.getArbol().getSprite(), (self.getArbol().getAnchoBloque() * columna), (self.getArbol().getAltoBloque() * fila), (self.getArbol().getAnchoBloque(), self.getArbol().getAltoBloque()))
+                    self.renderizarImagenSinUpdate(self.getArbol().getSprite(), (self.getArbol().getAnchoBloque() * columna), (self.getArbol().getAltoBloque() * fila), (self.getArbol().getAnchoBloque(), self.getArbol().getAltoBloque()))
                 if self.getMapa()[fila][columna] == Bloques.FUENTE:
-                    self.renderizarImagen(self.getFuente().getSprite(), (self.getFuente().getAnchoBloque() * columna), (self.getFuente().getAltoBloque() * fila), (self.getFuente().getAnchoBloque(), self.getFuente().getAltoBloque()))
+                    self.renderizarImagenSinUpdate(self.getFuente().getSprite(), (self.getFuente().getAnchoBloque() * columna), (self.getFuente().getAltoBloque() * fila), (self.getFuente().getAnchoBloque(), self.getFuente().getAltoBloque()))
+            display.update()
         self.renderizado = True
     
