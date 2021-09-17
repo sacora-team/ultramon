@@ -69,19 +69,22 @@ class Inventario(VistaBase):
         self.bucle = bucle
 
     def abrir_inventario(self):
-        if self.get_estado == False:
+        self.limpiarPantalla()
+        if self.get_estado() == False:
             self.renderizarImagen("assets/ambiente/inventario.png", 0, 0, (60, 40))
-        if self.get_estado == True:
+
+        if self.get_estado() == True:
             self.renderizarImagen("assets/ambiente/inventario.png", 0, 0, (300, 200))
+
 
 
 pantalla = pygame.display.set_mode((1080, 720))
 
 inventarioloco = Inventario()
-inventarioloco.abrir_inventario()
+inventarioloco.set_bucle(True)
 
 while inventarioloco.get_bucle():
-
+    inventarioloco.abrir_inventario()
     for evento in pygame.event.get(): 
         if evento.type == pygame.QUIT: 
             inventarioloco.set_bucle(False)
@@ -89,4 +92,4 @@ while inventarioloco.get_bucle():
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_e]:
-            inventarioloco.set_estado(True)
+            inventarioloco.abrir_inventario()
