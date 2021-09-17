@@ -5,7 +5,6 @@ from .constantes.habitaciones import Habitaciones
 from .constantes.direcciones import Direcciones
 from .entidades.base.ControllerBase import ControllerBase
 from .entidades.menu.MenuController import MenuController
-from .entidades.personaje.PersonajeController import PersonajeController
 from .constantes.estadosJuego import EstadosJuego
 
 class AppController(ControllerBase):
@@ -14,7 +13,6 @@ class AppController(ControllerBase):
         self.onInicializarController()
         self.vista: AppVista = AppVista()
         self.menuPrincipal: MenuController = MenuController()
-        self.personaje: PersonajeController = PersonajeController()
     
     def onInicializarController(self) -> None:
         mixer.Channel(0).play(mixer.Sound("./assets/sonidos/opening.wav"))
@@ -24,9 +22,6 @@ class AppController(ControllerBase):
     
     def getMenuPrincipal(self) -> MenuController:
         return self.menuPrincipal
-    
-    def getPersonaje(self) -> PersonajeController:
-        return self.personaje
     
     def loop(self) -> None:
         while self.ejecutandose:
