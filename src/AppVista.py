@@ -1,5 +1,4 @@
 from pygame import display
-from pygame.mouse import get_pos
 from .entidades.base.VistaBase import VistaBase
 from .constantes.habitaciones import Habitaciones
 from .constantes.bloques import Bloques
@@ -54,6 +53,9 @@ class AppVista(VistaBase):
     
     def definirHabitacion(self, habitacion: int) -> None:
         """ Dada una habitacion, define sus bloques """
+        
+        # TODO: Modularizar
+        
         if habitacion == Habitaciones.HALL:
             if self.definido:
                 return
@@ -85,13 +87,15 @@ class AppVista(VistaBase):
 
     
     def renderizarHabitacion(self, habitacion: int) -> None:
-        """" Dada una habitacion, la renderiza en pantalla """        
+        """" Dada una habitacion, la renderiza en pantalla """ 
+        
+        # TODO: Modulizar
+               
         if habitacion == Habitaciones.HALL:
             if self.renderizado:
                 return
             
             self.limpiarPantalla()
-            
             
             for fila in range(0, self.getCantidadFilas()):
                 for columna in range(0, self.getCantidadColumnas()):
@@ -106,12 +110,19 @@ class AppVista(VistaBase):
             
             display.update()
 
+            # Renderizo el personaje en la habitación
             self.renderizarImagen(self.getPersonaje().getSprite(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
         
             self.renderizado = True
         
     def moverPersonajeConVerificacion(self, direccion: int) -> None:
         """ Dada una direccion, verifica que sea caminable y mueve su posicion """
+
+        # Verifica que el bloque sea pasto o tierra (caminables)
+        # Cuando hace el movimiento, rellena el bloque anterior del personaje con el contenido del bloque sobre el que estaba        
+        
+        # TODO: Refactorizar
+        
         if direccion == Direcciones.ABAJO:
             if self.getMapa()[self.getPersonaje().getFilaPersonaje() + 1][self.getPersonaje().getColumnaPersonaje()] == Bloques.PASTO:
                 self.renderizarImagenSinUpdate(self.getPasto().getSprite(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
