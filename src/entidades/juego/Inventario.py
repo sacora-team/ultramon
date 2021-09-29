@@ -1,6 +1,7 @@
-import pygame
-from pygame import display, image, Surface, transform, font, mouse
+from pygame import init, display, image, Surface, transform, font, mouse, event, QUIT, K_e, KEYDOWN, K_r
 
+
+init()
 
 class VistaBase:
     def __init__(self) -> None:
@@ -43,17 +44,10 @@ class VistaBase:
         self.getWindow().fill((0, 0, 0))
         display.update()
 
-
-pygame.init()
-
 class Inventario(VistaBase):
     def __init__(self):
         super().__init__()
-        self.getAncho
-        self.getAlto
-
         self.bucle: bool = True
-        
         self.estado: bool = False 
     
     def get_estado(self):
@@ -68,27 +62,23 @@ class Inventario(VistaBase):
     def set_bucle(self, bucle: bool):
         self.bucle = bucle
 
-    def abrir_inventario(self):
-        self.limpiarPantalla()
+    def loop(self):
+        while self.get_bucle():
+            for evento in event.get():
+                if evento.type == QUIT:
+                    self.set_bucle(False)
+                if evento.type == KEYDOWN:
+                    if evento.key == K_e:
+                        self.renderizarImagen("assets/ambiente/inventario.png", 30, 30, (300, 200))
+                    if evento.key == K_r:
+                        self.limpiarPantalla()        
 
-        keys = pygame.key.get_pressed()
-
-        if keys[pygame.K_e] and self.get_estado() == True:
-            self.renderizarImagen("assets/ambiente/inventario.png", 0, 0, (60, 40))
-        elif keys[pygame.K_e] and self.get_estado() == False:
-            self.renderizarImagen("assets/ambiente/inventario.png", 0, 0, (300, 200))
+Inventario().loop()
 
 
-pantalla = pygame.display.set_mode((1080, 720))
 
-inventarioloco = Inventario()
-inventarioloco.set_bucle(True)
+            
 
-while inventarioloco.get_bucle():
-    inventarioloco.abrir_inventario()
-    for evento in pygame.event.get(): 
-        if evento.type == pygame.QUIT: 
-            inventarioloco.set_bucle(False)
 
-        
+
 
