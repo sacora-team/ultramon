@@ -1,5 +1,4 @@
-from pygame import init, display, image, Surface, transform, font, mouse, event, QUIT, K_e, KEYDOWN, K_r
-
+from pygame import init, display, draw, image, Surface, transform, font, mouse, event, QUIT, K_e, KEYDOWN, K_r
 
 init()
 
@@ -35,6 +34,10 @@ class VistaBase:
         self.getWindow().blit(imagen, (x, y))
         display.update()
 
+    def renderizarRectangulo(self, color, posx, posy, tamañox, tamañoy) -> None:
+        draw.rect(self.getWindow(), color, (posx, posy, tamañox, tamañoy))
+        display.update()
+
     def renderizarTexto(self, texto: str, size: int, color: tuple[int], x: int, y: int) -> None:
         typography = font.Font(self.getFuente(), size)
         self.getWindow().blit(typography.render(texto, True, color), (x, y))
@@ -50,26 +53,78 @@ class Inventario(VistaBase):
         self.bucle: bool = True
         self.estado: bool = False 
     
-    def get_estado(self):
+        self.casillero_1 = "assets/items/ultraball.png"
+        self.casillero_2 = "assets/pokemones/bulbasur01.png"
+        self.casillero_3 = "assets/pokemones/gato03.png"
+        self.casillero_4 = "assets/inventario/cruz.png"
+        self.casillero_5 = "assets/inventario/cruz.png"
+        self.casillero_6 = "assets/inventario/cruz.png"
+
+    def getEstado(self):
         return self.estado
 
-    def set_estado(self, estado):
+    def setEstado(self, estado):
         self.estado = estado
 
-    def get_bucle(self):
+    def getBucle(self):
         return self.bucle
 
-    def set_bucle(self, bucle: bool):
+    def setBucle(self, bucle: bool):
         self.bucle = bucle
 
+    def getCasillero1(self):
+        return self.casillero_1
+
+    def setCasillero1(self, item: str):
+        self.casillero_1 = item
+
+    def getCasillero2(self):
+        return self.casillero_2
+
+    def setCasillero2(self, item: str):
+        self.casillero_2 = item
+
+    def getCasillero3(self):
+        return self.casillero_3
+
+    def setCasillero3(self, item: str):
+        self.casillero_3 = item
+
+    def getCasillero4(self):
+        return self.casillero_4
+
+    def setCasillero4(self, item: str):
+        self.casillero_4 = item
+
+    def getCasillero5(self):
+        return self.casillero_5
+
+    def setCasillero5(self, item: str):
+        self.casillero_5 = item
+
+    def getCasillero6(self):
+        return self.casillero_6
+
+    def setCasillero6(self, item: str):
+        self.casillero_6 = item
+
     def loop(self):
-        while self.get_bucle():
+        while self.getBucle():
             for evento in event.get():
                 if evento.type == QUIT:
-                    self.set_bucle(False)
+                    self.setBucle(False)
                 if evento.type == KEYDOWN:
                     if evento.key == K_e:
-                        self.renderizarImagen("assets/ambiente/inventario.png", 30, 30, (300, 200))
+                        MARRON_INV = (77, 0, 0)
+                        self.renderizarImagen("assets/inventario/inventario.png", 0, 0, (300, 200))
+
+                        self.renderizarImagen(self.casillero_1, 25, 25, (70, 70)) # Casillero 1 
+                        self.renderizarImagen(self.casillero_2, 115, 25, (70, 70)) # Casillero 2
+                        self.renderizarImagen(self.casillero_3, 205, 25, (70, 70)) # Casillero 3
+                        self.renderizarImagen(self.casillero_4, 25, 106, (70, 70)) # Casillero 4
+                        self.renderizarImagen(self.casillero_5, 115, 106, (70, 70)) # Casillero 5
+                        self.renderizarImagen(self.casillero_6, 205, 106, (70, 70)) # Casillero 6
+
                     if evento.key == K_r:
                         self.limpiarPantalla()        
 
