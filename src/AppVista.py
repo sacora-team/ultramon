@@ -88,9 +88,8 @@ class AppVista(VistaBase):
                     self.getMapa()[fila][columna] = Bloques.ARBOL
 
 
+            self.getMapa()[self.getCantidadFilas() - 4][self.getCantidadColumnas() - 1] = Bloques.PASTO # Puerta
             self.getMapa()[self.getCantidadFilas() // 2][self.getCantidadColumnas() // 2] = Bloques.FUENTE
-
-
             self.getMapa()[self.getCantidadFilas() // 4][self.getCantidadColumnas() // 4] = Bloques.ARBOL
             self.getMapa()[self.getCantidadFilas() // 3][self.getCantidadColumnas() // 3] = Bloques.ARBOL
 
@@ -105,7 +104,6 @@ class AppVista(VistaBase):
                 return
             
             self.limpiarPantalla()
-            
             
             for fila in range(0, self.getCantidadFilas()):
                 for columna in range(0, self.getCantidadColumnas()):
