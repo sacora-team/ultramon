@@ -60,6 +60,9 @@ class Inventario(VistaBase):
         self.casillero_5 = "assets/inventario/cruz.png"
         self.casillero_6 = "assets/inventario/cruz.png"
 
+        self.casillas = [self.casillero_1, self.casillero_2, self.casillero_3,
+                        self.casillero_4, self.casillero_5, self.casillero_6]
+
     def getEstado(self):
         return self.estado
 
@@ -108,6 +111,18 @@ class Inventario(VistaBase):
     def setCasillero6(self, item: str):
         self.casillero_6 = item
 
+    def getCasillas(self):
+        return self.casillas
+
+    def agregarItem(self, item: str):
+        i = 0
+        for i in 5:
+            if self.getCasillas()[i] == "assets/inventario/cruz.png":
+                self.casillas[i] = item
+                i = 6
+            elif self.getCasillas()[i] != "assets/inventario/cruz.png":
+                i += 1
+
     def loop(self):
         while self.getBucle():
             for evento in event.get():
@@ -129,7 +144,7 @@ class Inventario(VistaBase):
                         self.limpiarPantalla()        
 
 Inventario().loop()
-
+Inventario().agregarItem("assets/pokemones/pajarito01.png")
 
 
             
