@@ -94,11 +94,33 @@ class AppVista(VistaBase):
             self.getMapa()[self.getCantidadFilas() // 3][self.getCantidadColumnas() // 3] = Bloques.ARBOL
 
         
-            self.definido = True
+        elif habitacion == Habitaciones.PRIMERA:
+            if self.definido:
+                return
+            
+            for fila in range(0, self.getCantidadFilas()):
+                self.getMapa().append([])
+                for columna in range(0, self.getCantidadColumnas()):
+                    self.getMapa()[fila].append(Bloques.PASTO)
+
+            for fila in range(self.getCantidadFilas() // 2 - 2, self.getCantidadFilas() // 2 + 2):
+                for columna in range(self.getCantidadColumnas() // 2 - 2, self.getCantidadColumnas() // 2 + 2):
+                    self.getMapa()[fila][columna] = Bloques.AGUA
+
+            self.getMapa()[self.getCantidadFilas() // 2][self.getCantidadColumnas() // 4 - 1] = Bloques.ARBOL
+            self.getMapa()[self.getCantidadFilas() // 2][self.getCantidadColumnas() // 3 - 1] = Bloques.ARBOL
+            self.getMapa()[self.getCantidadFilas() // 2][self.getCantidadColumnas() - self.getCantidadColumnas() // 4] = Bloques.ARBOL
+            self.getMapa()[self.getCantidadFilas() // 2][self.getCantidadColumnas() - self.getCantidadColumnas() // 3] = Bloques.ARBOL
+
+            self.getMapa()[self.getCantidadFilas() - 2][0] = Bloques.ARBOL # Puerta
+            self.getMapa()[self.getCantidadFilas() - 4][0] = Bloques.ARBOL # Puerta
+            
+
+        self.definido = True
 
     
     def renderizarHabitacion(self, habitacion: int) -> None:
-        """" Dada una habitacion, la renderiza en pantalla """        
+        """" Dada una habitacion, la renderiza en pantalla """
         if habitacion == Habitaciones.HALL:
             if self.renderizado:
                 return
@@ -119,8 +141,28 @@ class AppVista(VistaBase):
             display.update()
 
             self.renderizarImagen(self.getPersonaje().getSprite(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
-        
             self.renderizado = True
+        
+        elif habitacion == Habitaciones.PRIMERA:
+            if self.renderizado:
+                return
+            
+            self.limpiarPantalla()
+
+            for fila in range(0, self.getCantidadFilas()):
+                for columna in range(0, self.getCantidadColumnas()):
+                    if self.getMapa()[fila][columna] == Bloques.PASTO:
+                        self.renderizarImagenSinUpdate(self.getPasto().getSprite(), (self.getPasto().getAnchoBloque() * columna), (self.getPasto().getAltoBloque() * fila), (self.getPasto().getAnchoBloque(), self.getPasto().getAltoBloque()))
+                    if self.getMapa()[fila][columna] == Bloques.AGUA:
+                        self.renderizarImagenSinUpdate(self.getAgua().getSprite(), (self.getAgua().getAnchoBloque() * columna), (self.getAgua().getAltoBloque() * fila), (self.getAgua().getAnchoBloque(), self.getAgua().getAltoBloque()))
+                    if self.getMapa()[fila][columna] == Bloques.ARBOL:
+                        self.renderizarImagenSinUpdate(self.getArbol().getSprite(), (self.getArbol().getAnchoBloque() * columna), (self.getArbol().getAltoBloque() * fila), (self.getArbol().getAnchoBloque(), self.getArbol().getAltoBloque()))
+                    
+        display.update()
+
+        self.renderizarImagen(self.getPersonaje().getSprite(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
+        self.renderizado = True
+
         
     def moverPersonajeConVerificacion(self, direccion: int) -> None:
         """ Dada una direccion, verifica que sea caminable y mueve su posicion """
