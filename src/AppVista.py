@@ -140,7 +140,8 @@ class AppVista(VistaBase):
             
             display.update()
 
-            self.renderizarImagen(self.getPersonaje().getSprite(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
+            self.renderizarImagen(self.getPersonaje().getSpriteDerecha(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
+        
             self.renderizado = True
         
         elif habitacion == Habitaciones.PRIMERA:
@@ -167,43 +168,47 @@ class AppVista(VistaBase):
     def moverPersonajeConVerificacion(self, direccion: int) -> None:
         """ Dada una direccion, verifica que sea caminable y mueve su posicion """
         if direccion == Direcciones.ABAJO:
-
+            # Mueve al personaje
             if self.getMapa()[self.getPersonaje().getFilaPersonaje() + 1][self.getPersonaje().getColumnaPersonaje()] == Bloques.PASTO:
                 self.renderizarImagenSinUpdate(self.getPasto().getSprite(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
                 self.getPersonaje().moverPersonaje(direccion)
-                self.renderizarImagen(self.getPersonaje().getSprite(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
-            elif self.getMapa()[self.getPersonaje().getFilaPersonaje() + 1][self.getPersonaje().getColumnaPersonaje()] == Bloques.TIERRA:
-                self.renderizarImagenSinUpdate(self.getTierra().getSprite(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
-                self.getPersonaje().moverPersonaje(direccion)
-                self.renderizarImagen(self.getPersonaje().getSprite(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
+                self.renderizarImagen(self.getPersonaje().getSpriteAbajo(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
+            else:
+                # Cambia la direccion
+                self.renderizarImagenSinUpdate(self.getPasto().getSprite(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
+                self.renderizarImagen(self.getPersonaje().getSpriteAbajo(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
+
         elif direccion == Direcciones.ARRIBA:
-            
+            # Mueve al personaje
             if self.getMapa()[self.getPersonaje().getFilaPersonaje() - 1][self.getPersonaje().getColumnaPersonaje()] == Bloques.PASTO:
                 self.renderizarImagenSinUpdate(self.getPasto().getSprite(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
                 self.getPersonaje().moverPersonaje(direccion)
-                self.renderizarImagen(self.getPersonaje().getSprite(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
-            elif self.getMapa()[self.getPersonaje().getFilaPersonaje() - 1][self.getPersonaje().getColumnaPersonaje()] == Bloques.TIERRA:
-                self.renderizarImagenSinUpdate(self.getTierra().getSprite(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
-                self.getPersonaje().moverPersonaje(direccion)
-                self.renderizarImagen(self.getPersonaje().getSprite(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
+                self.renderizarImagen(self.getPersonaje().getSpriteArriba(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
+            else:
+                # Cambia la direccion
+                self.renderizarImagenSinUpdate(self.getPasto().getSprite(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
+                self.renderizarImagen(self.getPersonaje().getSpriteArriba(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
+                
         elif direccion == Direcciones.IZQUIERDA:
-
+            # Mueve al personaje y su direccion
             if self.getMapa()[self.getPersonaje().getFilaPersonaje()][self.getPersonaje().getColumnaPersonaje() - 1] == Bloques.PASTO:
                 self.renderizarImagenSinUpdate(self.getPasto().getSprite(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
                 self.getPersonaje().moverPersonaje(direccion)
-                self.renderizarImagen(self.getPersonaje().getSprite(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
-            elif self.getMapa()[self.getPersonaje().getFilaPersonaje()][self.getPersonaje().getColumnaPersonaje() - 1] == Bloques.TIERRA:
-                self.renderizarImagenSinUpdate(self.getTierra().getSprite(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
-                self.getPersonaje().moverPersonaje(direccion)
-                self.renderizarImagen(self.getPersonaje().getSprite(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
+                self.renderizarImagen(self.getPersonaje().getSpriteIzquierda(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
+            else:
+                # Cambia la direccion
+                self.renderizarImagenSinUpdate(self.getPasto().getSprite(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
+                self.renderizarImagen(self.getPersonaje().getSpriteIzquierda(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
+                
         elif direccion == Direcciones.DERECHA:
-
+            # Mueve al personaje
             if self.getMapa()[self.getPersonaje().getFilaPersonaje()][self.getPersonaje().getColumnaPersonaje() + 1] == Bloques.PASTO:
                 self.renderizarImagenSinUpdate(self.getPasto().getSprite(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
                 self.getPersonaje().moverPersonaje(direccion)
-                self.renderizarImagen(self.getPersonaje().getSprite(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
-            elif self.getMapa()[self.getPersonaje().getFilaPersonaje()][self.getPersonaje().getColumnaPersonaje() + 1] == Bloques.TIERRA:
-                self.renderizarImagenSinUpdate(self.getTierra().getSprite(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
-                self.getPersonaje().moverPersonaje(direccion)
-                self.renderizarImagen(self.getPersonaje().getSprite(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
+                self.renderizarImagen(self.getPersonaje().getSpriteDerecha(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
+            else:
+                # Cambia la direccion
+                self.renderizarImagenSinUpdate(self.getPasto().getSprite(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
+                self.renderizarImagen(self.getPersonaje().getSpriteDerecha(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
+                
         
