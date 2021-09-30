@@ -4,9 +4,13 @@ from ...constantes.direcciones import Direcciones
 class Personaje(Bloque):
     def __init__(self) -> None:
         super().__init__()
-        self.sprite = 'assets/personajes/ash/frente1.png'
+        self.spriteAbajo = 'assets/personajes/ash/frente1.png'
+        self.spriteIzquierda = 'assets/personajes/ash/izquierda1.png'
+        self.spriteDerecha = 'assets/personajes/ash/derecha1.png'
+        self.spriteArriba = 'assets/personajes/ash/reversa1.png'
         self.filaPersonaje: int = self.getCantidadFilas() // 2
         self.columnaPersonaje: int = self.getCantidadColumnas() // 12
+        self.direccionActual: int = Direcciones.DERECHA
         
     def getFilaPersonaje(self) -> int:
         return self.filaPersonaje
@@ -20,8 +24,17 @@ class Personaje(Bloque):
     def setColumnaPersonaje(self, columna: int) -> None:
         self.columnaPersonaje = columna
         
-    def getSprite(self) -> str:
-        return self.sprite
+    def getSpriteAbajo(self) -> str:
+        return self.spriteAbajo
+    
+    def getSpriteArriba(self) -> str:
+        return self.spriteArriba
+    
+    def getSpriteDerecha(self) -> str:
+        return self.spriteDerecha
+    
+    def getSpriteIzquierda(self) -> str:
+        return self.spriteIzquierda
     
     def moverPersonaje(self, direccion: int) -> None:
         if direccion == Direcciones.ABAJO:
