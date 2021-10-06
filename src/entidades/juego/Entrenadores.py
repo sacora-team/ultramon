@@ -47,19 +47,19 @@ class Entrenadores:
     def getSprite(self):
 
         if self.nroEntrenador == 1:
-            self.sprite = pygame.image.load("./monica.png")
+            self.sprite = pygame.image.load("assets/personajes/maestros/a1.png")
 
         elif self.nroEntrenador == 2:
-            self.sprite = pygame.image.load("./b1.png")
+            self.sprite = pygame.image.load("assets/personajes/maestros/b1.png")
 
         elif self.nroEntrenador == 3:
-            self.sprite = pygame.image.load("./c1.png")
+            self.sprite = pygame.image.load("assets/personajes/maestros/c1.png")
 
         elif self.nroEntrenador == 4:
-            self.sprite = pygame.image.load("./d1.png")
+            self.sprite = pygame.image.load("assets/personajes/maestros/d1.png")
 
-        elif:
-            self.sprite = pygame.image.load("./e1.png")
+        else:
+            self.sprite = pygame.image.load("assets/personajes/maestros/e1.png")
 
         return self.sprite
         
@@ -77,7 +77,7 @@ class Entrenadores:
         elif self.nroEntrenador == 4:
             self.pokeTrainer = ("sapo03","ratoide02","pepapig02")
 
-        elif:
+        else:
             self.pokeTrainer = ("vamoacalmarno03","pikachu02","charmander03")
 
         return self.pokeTrainer
@@ -90,24 +90,7 @@ class Entrenadores:
                     self.ejecutar = False   
     
             PANTALLA.blit(self.getSprite(),(self.getPosY(), self.getPosX()))
-
-            
-            """
-            for i in range (3):
-
-                listaDeCarga = (pygame.image.load("pokemones/vamoacalmarno03.png"), pygame.image.load("pokemones/vamoacalmarno01.png"),pygame.image.load("pokemones/vamoacalmarno02.png"))
-                PANTALLA.blit(listaDeCarga[i],((i* 100),(i*200))) 
-                
             pygame.display.flip()
-            """
-            """
-            faltan:
-                rango de deteccion 
-                movimiento
-                dialogo
-        
-        
-            """
 
 
 aa = Entrenadores()
