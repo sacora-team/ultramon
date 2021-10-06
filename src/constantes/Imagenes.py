@@ -73,7 +73,6 @@ class Imagenes:
     E5 = 'assets/personajes/maestros/e5.png'
 
     # POKEMONES
-
     BULBASOR1 = 'assets/pokemones/bulbasur01.png'
     BULBASOR2 = 'assets/pokemones/bulbasur02.png'
     BULBASOR3 = 'assets/pokemones/bulbasur03.png'
@@ -109,14 +108,8 @@ class Imagenes:
     VAMO2 = 'assets/pokemones/vamoacalmarno02.png'
     VAMO3 = 'assets/pokemones/vamoacalmarno03.png'
 
-    # RELIEVES 
-
+    # RELIEVES
     AGUA = 'assets/relieves/agua.png'
     ARENA = 'assets/relieves/arena.png'
     PASTO = 'assets/relieves/pasto.png'
     TIERRA = 'assets/relieves/tierra.png'
-
-    # SONIDOS
-    
-    OPENING = 'assets/sonidos/opening.wav'
-    SFX = 'assets/sonidos/SFX_PRESS_AB.wav'
