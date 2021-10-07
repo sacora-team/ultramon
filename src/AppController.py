@@ -16,7 +16,7 @@ class AppController(ControllerBase):
     
     def onInicializarController(self) -> None:
         mixer.Channel(0).play(mixer.Sound("./assets/sonidos/opening.wav"))
-        mixer.Channel(0).set_volume(0.4)
+        mixer.Channel(0).set_volume(0.1)
         
     
     def getVista(self) -> AppVista:
