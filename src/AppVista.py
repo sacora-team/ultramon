@@ -1,5 +1,4 @@
 from pygame import display
-from pygame.mouse import get_pos
 from .entidades.base.VistaBase import VistaBase
 from .constantes.habitaciones import Habitaciones
 from .constantes.bloques import Bloques
@@ -143,11 +142,11 @@ class AppVista(VistaBase):
             self.renderizarImagen(self.getPersonaje().getSpriteDerecha(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
         
             self.renderizado = True
-        
+
         elif habitacion == Habitaciones.PRIMERA:
             if self.renderizado:
                 return
-            
+
             self.limpiarPantalla()
 
             for fila in range(0, self.getCantidadFilas()):
@@ -158,11 +157,12 @@ class AppVista(VistaBase):
                         self.renderizarImagenSinUpdate(self.getAgua().getSprite(), (self.getAgua().getAnchoBloque() * columna), (self.getAgua().getAltoBloque() * fila), (self.getAgua().getAnchoBloque(), self.getAgua().getAltoBloque()))
                     if self.getMapa()[fila][columna] == Bloques.ARBOL:
                         self.renderizarImagenSinUpdate(self.getArbol().getSprite(), (self.getArbol().getAnchoBloque() * columna), (self.getArbol().getAltoBloque() * fila), (self.getArbol().getAnchoBloque(), self.getArbol().getAltoBloque()))
-                    
-        display.update()
 
-        self.renderizarImagen(self.getPersonaje().getSprite(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
-        self.renderizado = True
+            display.update()
+
+            self.renderizarImagen(self.getPersonaje().getSpriteDerecha(), (self.getPersonaje().getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getPersonaje().getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getPersonaje().getAnchoBloque(), self.getPersonaje().getAltoBloque()))
+            
+            self.renderizado = True
 
         
     def moverPersonajeConVerificacion(self, direccion: int) -> None:
