@@ -6,6 +6,7 @@ from .constantes.habitaciones import Habitaciones
 from .constantes.bloques import Bloques
 from .entidades.bloques.Personaje import Personaje
 from .constantes.direcciones import Direcciones
+from .constantes.zooms import Zooms
 
 
 class AppVista(VistaBase):
@@ -60,40 +61,40 @@ class AppVista(VistaBase):
         
         if habitacion == Habitaciones.HALL:
             
-            for fila in range(0, self.getCantidadFilas()):
+            for fila in range(0, 14):
                 self.getMapa().append([])
-                for columna in range(0, self.getCantidadColumnas()):
+                for columna in range(0, 24):
                     self.getMapa()[fila].append(Bloques.PASTO)
         
             for fila in range(1, 2):
-                for columna in range(0, self.getCantidadColumnas()):
+                for columna in range(0, 24):
                     self.getMapa()[fila][columna] = Bloques.AGUA
         
             for fila in range(12, 13):
-                for columna in range(0, self.getCantidadColumnas()):
+                for columna in range(0, 24):
                     self.getMapa()[fila][columna] = Bloques.AGUA
 
             for fila in range(0, 1):
-                for columna in range(0, self.getCantidadColumnas()):
+                for columna in range(0, 24):
                     self.getMapa()[fila][columna] = Bloques.ARBOL
         
             for fila in range(13, 14):
-                for columna in range(0, self.getCantidadColumnas()):
+                for columna in range(0, 24):
                     self.getMapa()[fila][columna] = Bloques.ARBOL
 
-            for fila in range(0, self.getCantidadFilas()):
+            for fila in range(0, 14):
                 for columna in range(0, 1):
                     self.getMapa()[fila][columna] = Bloques.ARBOL
 
-            for fila in range(0, self.getCantidadFilas()):
+            for fila in range(0, 14):
                 for columna in range(23, 24):
                     self.getMapa()[fila][columna] = Bloques.ARBOL
 
 
-            self.getMapa()[self.getCantidadFilas() - 4][self.getCantidadColumnas() - 1] = Bloques.PASTO
-            self.getMapa()[self.getCantidadFilas() // 2][self.getCantidadColumnas() // 2] = Bloques.FUENTE
-            self.getMapa()[self.getCantidadFilas() // 4][self.getCantidadColumnas() // 4] = Bloques.ARBOL
-            self.getMapa()[self.getCantidadFilas() // 3][self.getCantidadColumnas() // 3] = Bloques.ARBOL
+            self.getMapa()[14 - 4][24 - 1] = Bloques.PASTO
+            self.getMapa()[14 // 2][24 // 2] = Bloques.FUENTE
+            self.getMapa()[14 // 4][24 // 4] = Bloques.ARBOL
+            self.getMapa()[14 // 3][24 // 3] = Bloques.ARBOL
 
         
         elif habitacion == Habitaciones.PRIMERA:
@@ -138,7 +139,6 @@ class AppVista(VistaBase):
                     self.renderizarImagenSinUpdate(Imagenes.FUENTE, (self.getAnchoBloque() * columna), (self.getAltoBloque() * fila), (self.getAnchoBloque(), self.getAltoBloque()))
                 if self.getMapa()[fila][columna] == Bloques.PIEDRA:
                     self.renderizarImagenSinUpdate(Imagenes.PIEDRA, (self.getAnchoBloque() * columna), (self.getAltoBloque() * fila), (self.getAnchoBloque(), self.getAltoBloque()))
-        
         
         if habitacion == Habitaciones.HALL:
             self.renderizarImagen(Imagenes.ASH_DER1, (self.getAnchoBloque() * self.getColumnaPersonaje()), (self.getAltoBloque() * self.getFilaPersonaje()), (self.getAnchoBloque(), self.getAltoBloque()))
@@ -202,5 +202,21 @@ class AppVista(VistaBase):
             else:
                 # Cambia la direccion
                 self.renderizarImagen(Imagenes.ASH_DER1, (self.getAnchoBloque() * self.getColumnaPersonaje()), (self.getAltoBloque() * self.getFilaPersonaje()), (self.getAnchoBloque(), self.getAltoBloque()))
-                
-        
+
+    def zoom(self, accion: int):
+        if accion == Zooms.MINIMIZAR:
+            self.cantidadColumnas = self.cantidadColumnas + 1
+            self.cantidadFilas = self.cantidadFilas + 1
+            self.renderizado = False
+            self.definido = False
+            self.getBloque().actualizarMedidas(Zooms.MINIMIZAR)
+            self.definirHabitacion(Habitaciones.HALL)
+            self.renderizarHabitacion(Habitaciones.HALL)
+        elif accion == Zooms.MAXIMIZAR:
+            self.cantidadColumnas = self.cantidadColumnas - 1
+            self.cantidadFilas = self.cantidadFilas - 1
+            self.renderizado = False
+            self.definido = False
+            self.getBloque().actualizarMedidas(Zooms.MAXIMIZAR)
+            self.definirHabitacion(Habitaciones.HALL)
+            self.renderizarHabitacion(Habitaciones.HALL)

@@ -9,6 +9,8 @@ from pygame import (
     K_RIGHT,
     K_UP,
     K_DOWN,
+    K_KP_MINUS,
+    K_KP_PLUS
 )
 
 from ...constantes.estadosJuego import EstadosJuego
@@ -25,6 +27,10 @@ class ControllerBase:
         self.abajo: bool = False
         self.izquierda: bool = False
         self.derecha: bool = False
+
+        self.minimizarZoom: bool = False
+        self.maximizarZoom: bool = False
+
         self.seleccionar: bool = False
         self.atras: bool = False
 
@@ -75,6 +81,10 @@ class ControllerBase:
                     self.setIzquierda(True)
                 if evento.key == K_RIGHT:
                     self.setDerecha(True)
+                if evento.key == K_KP_MINUS:
+                    self.setMinimizarZoom(True)
+                if evento.key == K_KP_PLUS:
+                    self.setMaximizarZoom(True)
 
     def resetearKeys(self) -> None:
         self.setArriba(False)
@@ -83,6 +93,8 @@ class ControllerBase:
         self.setDerecha(False)
         self.setSeleccionar(False)
         self.setAtras(False)
+        self.setMinimizarZoom(False)
+        self.setMaximizarZoom(False)
 
     ######################
     #       TECLAS       #
@@ -122,3 +134,15 @@ class ControllerBase:
 
     def getAtras(self) -> bool:
         return self.atras
+
+    def getMinimizarZoom(self) -> bool:
+        return self.minimizarZoom
+    
+    def setMinimizarZoom(self, estado: bool) -> None:
+        self.minimizarZoom = estado
+
+    def getMaximizarZoom(self) -> bool:
+        return self.maximizarZoom
+    
+    def setMaximizarZoom(self, estado: bool) -> None:
+        self.maximizarZoom = estado

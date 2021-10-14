@@ -6,6 +6,7 @@ from .constantes.direcciones import Direcciones
 from .entidades.base.ControllerBase import ControllerBase
 from .entidades.menu.MenuController import MenuController
 from .constantes.estadosJuego import EstadosJuego
+from .constantes.zooms import Zooms
 
 class AppController(ControllerBase):
     def __init__(self) -> None:
@@ -44,4 +45,10 @@ class AppController(ControllerBase):
                     self.resetearKeys()
                 if self.getDerecha():
                     self.getVista().moverPersonajeConVerificacion(Direcciones.DERECHA)
+                    self.resetearKeys()
+                if self.getMinimizarZoom():
+                    self.getVista().zoom(Zooms.MINIMIZAR)
+                    self.resetearKeys()
+                if self.getMaximizarZoom():
+                    self.getVista().zoom(Zooms.MAXIMIZAR)
                     self.resetearKeys()
