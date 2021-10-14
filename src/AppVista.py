@@ -17,6 +17,9 @@ class AppVista(VistaBase):
         self.bloque = Bloque()
         
         self.caminables = [Bloques.PASTO, Bloques.TIERRA]
+
+        self.maxZoom = 24
+        self.minZoom = 18
         
         self.definido = False
         self.renderizado = False
@@ -205,18 +208,20 @@ class AppVista(VistaBase):
 
     def zoom(self, accion: int):
         if accion == Zooms.MINIMIZAR:
-            self.cantidadColumnas = self.cantidadColumnas + 1
-            self.cantidadFilas = self.cantidadFilas + 1
-            self.renderizado = False
-            self.definido = False
-            self.getBloque().actualizarMedidas(Zooms.MINIMIZAR)
-            self.definirHabitacion(Habitaciones.HALL)
-            self.renderizarHabitacion(Habitaciones.HALL)
+            if self.getCantidadColumnas() != self.maxZoom:
+                self.cantidadColumnas = self.cantidadColumnas + 1
+                self.cantidadFilas = self.cantidadFilas + 1
+                self.renderizado = False
+                self.definido = False
+                self.getBloque().actualizarMedidas(Zooms.MINIMIZAR)
+                self.definirHabitacion(Habitaciones.HALL)
+                self.renderizarHabitacion(Habitaciones.HALL)
         elif accion == Zooms.MAXIMIZAR:
-            self.cantidadColumnas = self.cantidadColumnas - 1
-            self.cantidadFilas = self.cantidadFilas - 1
-            self.renderizado = False
-            self.definido = False
-            self.getBloque().actualizarMedidas(Zooms.MAXIMIZAR)
-            self.definirHabitacion(Habitaciones.HALL)
-            self.renderizarHabitacion(Habitaciones.HALL)
+            if self.getCantidadColumnas() != self.minZoom:
+                self.cantidadColumnas = self.cantidadColumnas - 1
+                self.cantidadFilas = self.cantidadFilas - 1
+                self.renderizado = False
+                self.definido = False
+                self.getBloque().actualizarMedidas(Zooms.MAXIMIZAR)
+                self.definirHabitacion(Habitaciones.HALL)
+                self.renderizarHabitacion(Habitaciones.HALL)

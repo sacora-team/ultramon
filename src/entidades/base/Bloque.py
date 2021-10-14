@@ -10,12 +10,10 @@ class Bloque(VistaBase):
         self.caminable: bool = True
         
     def actualizarMedidas(self, accion: bool) -> None:
-        
         if accion == 1:
             self.cantidadColumnas = self.cantidadColumnas + 1
-            self.cantidadFilas = self.cantidadFilas + 1
-        elif accion == 2:
-
+            self.cantidadFilas = self.cantidadFilas + 1            
+        if accion == 2:
             self.cantidadColumnas = self.cantidadColumnas - 1
             self.cantidadFilas = self.cantidadFilas - 1
         
