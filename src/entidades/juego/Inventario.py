@@ -130,7 +130,6 @@ class Inventario(VistaBase):
                     self.setBucle(False)
                 if evento.type == KEYDOWN:
                     if evento.key == K_e:
-                        MARRON_INV = (77, 0, 0)
                         self.renderizarImagen("assets/inventario/inventario.png", 0, 0, (300, 200))
 
                         self.renderizarImagen(self.casillero_1, 25, 25, (70, 70)) # Casillero 1 

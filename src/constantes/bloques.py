@@ -6,3 +6,4 @@ class Bloques:
     FUENTE = 5
     TIERRA = 6
     PERSONAJE = 7
+    PUERTA = 8

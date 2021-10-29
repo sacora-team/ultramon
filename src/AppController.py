@@ -31,8 +31,8 @@ class AppController(ControllerBase):
                 self.getMenuPrincipal().activar()
                 self.setEstado(EstadosJuego.JUEGO)
             if self.getEstado() == EstadosJuego.JUEGO:
-                self.getVista().definirHabitacion(Habitaciones.HALL)
-                self.getVista().renderizarHabitacion(Habitaciones.HALL)
+                self.getVista().definirHabitacion(Habitaciones.PRIMERA)
+                self.getVista().renderizarHabitacion(Habitaciones.PRIMERA)
                 self.chequearEventos()
                 if self.getArriba():
                     self.getVista().moverPersonajeConVerificacion(Direcciones.ARRIBA)
@@ -52,3 +52,4 @@ class AppController(ControllerBase):
                 if self.getMaximizarZoom():
                     self.getVista().zoom(Zooms.MAXIMIZAR)
                     self.resetearKeys()
+            

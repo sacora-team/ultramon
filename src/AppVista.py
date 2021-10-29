@@ -93,36 +93,55 @@ class AppVista(VistaBase):
                 for columna in range(23, 24):
                     self.getMapa()[fila][columna] = Bloques.ARBOL
 
+            self.getMapa()[10][23] = Bloques.PASTO
+            self.getMapa()[7][12] = Bloques.FUENTE
+            self.getMapa()[14 // 4][6] = Bloques.ARBOL
+            self.getMapa()[14 // 3][8] = Bloques.ARBOL
 
-            self.getMapa()[14 - 4][24 - 1] = Bloques.PASTO
-            self.getMapa()[14 // 2][24 // 2] = Bloques.FUENTE
-            self.getMapa()[14 // 4][24 // 4] = Bloques.ARBOL
-            self.getMapa()[14 // 3][24 // 3] = Bloques.ARBOL
-
+            if self.getMapa()[5][5] == Bloques.PERSONAJE:
+                habitacion = Habitaciones.PRIMERA
         
         elif habitacion == Habitaciones.PRIMERA:
-            
-            for fila in range(0, self.getCantidadFilas()):
+
+            for fila in range(0, 24):
                 self.getMapa().append([])
-                for columna in range(0, self.getCantidadColumnas()):
+                for columna in range(0, 24):
                     self.getMapa()[fila].append(Bloques.PASTO)
 
-            for fila in range(self.getCantidadFilas() // 2 - 2, self.getCantidadFilas() // 2 + 2):
-                for columna in range(self.getCantidadColumnas() // 2 - 2, self.getCantidadColumnas() // 2 + 2):
+            for fila in range(5, 8):
+                for columna in range(10, 13):
                     self.getMapa()[fila][columna] = Bloques.AGUA
 
-            self.getMapa()[self.getCantidadFilas() // 2][self.getCantidadColumnas() // 4 - 1] = Bloques.ARBOL
-            self.getMapa()[self.getCantidadFilas() // 2][self.getCantidadColumnas() // 3 - 1] = Bloques.ARBOL
-            self.getMapa()[self.getCantidadFilas() // 2][self.getCantidadColumnas() - self.getCantidadColumnas() // 4] = Bloques.ARBOL
-            self.getMapa()[self.getCantidadFilas() // 2][self.getCantidadColumnas() - self.getCantidadColumnas() // 3] = Bloques.ARBOL
+            for fila in range(0, 14):
+                for columna in range(0, 1):
+                    self.getMapa()[fila][columna] = Bloques.ARBOL
 
-            self.getMapa()[self.getCantidadFilas() - 2][0] = Bloques.ARBOL
-            self.getMapa()[self.getCantidadFilas() - 4][0] = Bloques.ARBOL
-            
+            for fila in range(0, 1):
+                for columna in range(1, 24):
+                    self.getMapa()[fila][columna] = Bloques.PIEDRA
+
+            for fila in range(13, 14):
+                for columna in range(1, 24):
+                    self.getMapa()[fila][columna] = Bloques.PIEDRA
+
+            for fila in range(0, 14):
+                for columna in range(23, 24):
+                    self.getMapa()[fila][columna] = Bloques.PIEDRA
+
+            for fila in range(0, 14):
+                for columna in range(22, 23):
+                    self.getMapa()[fila][columna] = Bloques.PIEDRA
+
+            self.getMapa()[7][5] = Bloques.ARBOL
+            self.getMapa()[7][7] = Bloques.ARBOL
+            self.getMapa()[7][18] = Bloques.ARBOL
+            self.getMapa()[7][16] = Bloques.ARBOL
+
+            self.getMapa()[11][0] = Bloques.PUERTA  # Puerta
 
         self.setDefinido(True)
-
     
+
     def renderizarHabitacion(self, habitacion: int) -> None:
         """" Dada una habitacion, la renderiza en pantalla """
         if self.getRenderizado():
@@ -142,7 +161,9 @@ class AppVista(VistaBase):
                     self.renderizarImagenSinUpdate(Imagenes.FUENTE, (self.getAnchoBloque() * columna), (self.getAltoBloque() * fila), (self.getAnchoBloque(), self.getAltoBloque()))
                 if self.getMapa()[fila][columna] == Bloques.PIEDRA:
                     self.renderizarImagenSinUpdate(Imagenes.PIEDRA, (self.getAnchoBloque() * columna), (self.getAltoBloque() * fila), (self.getAnchoBloque(), self.getAltoBloque()))
-        
+                if self.getMapa()[fila][columna] == Bloques.PUERTA:
+                    self.renderizarImagenSinUpdate(Imagenes.PASTO, (self.getAnchoBloque() * columna), (self.getAltoBloque() * fila), (self.getAnchoBloque(), self.getAltoBloque()))
+
         if habitacion == Habitaciones.HALL:
             self.renderizarImagen(Imagenes.ASH_DER1, (self.getAnchoBloque() * self.getColumnaPersonaje()), (self.getAltoBloque() * self.getFilaPersonaje()), (self.getAnchoBloque(), self.getAltoBloque()))
 
@@ -159,7 +180,7 @@ class AppVista(VistaBase):
         self.definido = False
         self.renderizado = False
 
-        
+
     def moverPersonajeConVerificacion(self, direccion: int) -> None:
         """ Dada una direccion, verifica que sea caminable y mueve su posicion """
         if direccion == Direcciones.ABAJO:

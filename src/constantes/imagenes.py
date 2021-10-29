@@ -113,3 +113,4 @@ class Imagenes:
     ARENA = 'assets/relieves/arena.png'
     PASTO = 'assets/relieves/pasto.png'
     TIERRA = 'assets/relieves/tierra.png'
+    PUERTA = 'assets/relieves/pasto.png'

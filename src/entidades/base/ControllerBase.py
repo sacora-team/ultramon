@@ -99,6 +99,7 @@ class ControllerBase:
     ######################
     #       TECLAS       #
     ######################
+    
     def setArriba(self, estado: bool) -> None:
         self.arriba = estado
 
