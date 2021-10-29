@@ -1,4 +1,4 @@
-from pygame import display
+from pygame import display, time
 from .entidades.base.VistaBase import VistaBase
 from .entidades.base.Bloque import Bloque
 from .constantes.imagenes import Imagenes
@@ -97,9 +97,6 @@ class AppVista(VistaBase):
             self.getMapa()[7][12] = Bloques.FUENTE
             self.getMapa()[14 // 4][6] = Bloques.ARBOL
             self.getMapa()[14 // 3][8] = Bloques.ARBOL
-
-            if self.getMapa()[5][5] == Bloques.PERSONAJE:
-                habitacion = Habitaciones.PRIMERA
         
         elif habitacion == Habitaciones.PRIMERA:
 
@@ -137,7 +134,31 @@ class AppVista(VistaBase):
             self.getMapa()[7][18] = Bloques.ARBOL
             self.getMapa()[7][16] = Bloques.ARBOL
 
-            self.getMapa()[11][0] = Bloques.PUERTA  # Puerta
+            self.getMapa()[11][0] = Bloques.PASTO  # Puerta
+
+            self.getMapa()[3][3] = Bloques.PIEDRA
+
+            i = 0
+            for i in range (0, 3):
+                if i == 0:
+                    self.getMapa()[4][3] = Bloques.PIEDRA
+                    self.getMapa()[3][3] = Bloques.PASTO
+                    i += 1
+                    
+                elif i == 1:
+                    self.getMapa()[4][4] = Bloques.PIEDRA
+                    self.getMapa()[4][3] = Bloques.PASTO
+                    i += 1
+
+                elif i == 2:
+                    self.getMapa()[3][4] = Bloques.PIEDRA
+                    self.getMapa()[4][4] = Bloques.PASTO
+                    i += 1
+
+                elif i == 3:
+                    self.getMapa()[3][3] = Bloques.PIEDRA
+                    self.getMapa()[3][4] = Bloques.PASTO
+                    i = 0
 
         self.setDefinido(True)
     
@@ -161,8 +182,6 @@ class AppVista(VistaBase):
                     self.renderizarImagenSinUpdate(Imagenes.FUENTE, (self.getAnchoBloque() * columna), (self.getAltoBloque() * fila), (self.getAnchoBloque(), self.getAltoBloque()))
                 if self.getMapa()[fila][columna] == Bloques.PIEDRA:
                     self.renderizarImagenSinUpdate(Imagenes.PIEDRA, (self.getAnchoBloque() * columna), (self.getAltoBloque() * fila), (self.getAnchoBloque(), self.getAltoBloque()))
-                if self.getMapa()[fila][columna] == Bloques.PUERTA:
-                    self.renderizarImagenSinUpdate(Imagenes.PASTO, (self.getAnchoBloque() * columna), (self.getAltoBloque() * fila), (self.getAnchoBloque(), self.getAltoBloque()))
 
         if habitacion == Habitaciones.HALL:
             self.renderizarImagen(Imagenes.ASH_DER1, (self.getAnchoBloque() * self.getColumnaPersonaje()), (self.getAltoBloque() * self.getFilaPersonaje()), (self.getAnchoBloque(), self.getAltoBloque()))
@@ -171,7 +190,6 @@ class AppVista(VistaBase):
             self.renderizarImagen(Imagenes.ASH_DER1, (self.getAnchoBloque() * self.getColumnaPersonaje()), (self.getAltoBloque() * self.getFilaPersonaje()), (self.getAnchoBloque(), self.getAltoBloque()))
             
         display.update()
-            
         self.setRenderizado(True)
         
 
@@ -246,3 +264,13 @@ class AppVista(VistaBase):
                 self.getBloque().actualizarMedidas(Zooms.MAXIMIZAR)
                 self.definirHabitacion(Habitaciones.HALL)
                 self.renderizarHabitacion(Habitaciones.HALL)
+    
+    def cambiarHabitacion(self, habitacion: int):
+
+        if habitacion == Habitaciones.HALL:
+            if self.getMapa()[10][23] == Bloques.PERSONAJE:
+                pass
+
+        elif habitacion == Habitaciones.PRIMERA:
+            if self.getMapa()[11][0] == Bloques.PERSONAJE:
+                pass

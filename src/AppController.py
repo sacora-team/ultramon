@@ -52,4 +52,3 @@ class AppController(ControllerBase):
                 if self.getMaximizarZoom():
                     self.getVista().zoom(Zooms.MAXIMIZAR)
                     self.resetearKeys()
-            

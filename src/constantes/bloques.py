@@ -7,3 +7,4 @@ class Bloques:
     TIERRA = 6
     PERSONAJE = 7
     PUERTA = 8
+    MAESTRO = 9
