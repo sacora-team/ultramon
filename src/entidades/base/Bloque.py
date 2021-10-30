@@ -1,6 +1,7 @@
 from pygame import Surface
 from .VistaBase import VistaBase
 
+
 class Bloque(VistaBase):
     def __init__(self) -> None:
         super().__init__()
@@ -8,6 +9,17 @@ class Bloque(VistaBase):
         self.altoBloque: int = self.getAlto() // self.getCantidadFilas()
         self.caminable: bool = True
         
+    def actualizarMedidas(self, accion: bool) -> None:
+        if accion == 1:
+            self.cantidadColumnas = self.cantidadColumnas + 1
+            self.cantidadFilas = self.cantidadFilas + 1            
+        if accion == 2:
+            self.cantidadColumnas = self.cantidadColumnas - 1
+            self.cantidadFilas = self.cantidadFilas - 1
+        
+        self.anchoBloque = self.getAncho() // self.cantidadColumnas
+        self.altoBloque = self.getAlto() // self.cantidadFilas
+
     def getAltoBloque(self) -> int:
         return self.altoBloque
     

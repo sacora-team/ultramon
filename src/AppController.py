@@ -6,6 +6,7 @@ from .constantes.direcciones import Direcciones
 from .entidades.base.ControllerBase import ControllerBase
 from .entidades.menu.MenuController import MenuController
 from .constantes.estadosJuego import EstadosJuego
+from .constantes.zooms import Zooms
 
 class AppController(ControllerBase):
     def __init__(self) -> None:
@@ -16,7 +17,8 @@ class AppController(ControllerBase):
     
     def onInicializarController(self) -> None:
         mixer.Channel(0).play(mixer.Sound("./assets/sonidos/opening.wav"))
-    
+        mixer.Channel(0).set_volume(0.1)
+        
     def getVista(self) -> AppVista:
         return self.vista
     
@@ -29,8 +31,7 @@ class AppController(ControllerBase):
                 self.getMenuPrincipal().activar()
                 self.setEstado(EstadosJuego.JUEGO)
             if self.getEstado() == EstadosJuego.JUEGO:
-                self.getVista().definirHabitacion(Habitaciones.HALL)
-                self.getVista().renderizarHabitacion(Habitaciones.HALL)
+                self.getVista().comenzar()
                 self.chequearEventos()
                 if self.getArriba():
                     self.getVista().moverPersonajeConVerificacion(Direcciones.ARRIBA)
@@ -44,4 +45,9 @@ class AppController(ControllerBase):
                 if self.getDerecha():
                     self.getVista().moverPersonajeConVerificacion(Direcciones.DERECHA)
                     self.resetearKeys()
-                    
+                if self.getMinimizarZoom():
+                    self.getVista().zoom(Zooms.MINIMIZAR)
+                    self.resetearKeys()
+                if self.getMaximizarZoom():
+                    self.getVista().zoom(Zooms.MAXIMIZAR)
+                    self.resetearKeys()

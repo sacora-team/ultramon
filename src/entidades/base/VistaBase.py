@@ -34,8 +34,14 @@ class VistaBase:
     def getCantidadFilas(self) -> int:
         return self.cantidadFilas
     
+    def setCantidadFilas(self, cantidad: int) ->  int:
+        self.cantidadFilas = cantidad
+
     def getCantidadColumnas(self) -> int:
         return self.cantidadColumnas
+
+    def setCantidadColumnas(self, cantidad: int) ->  int:
+        self.cantidadColumnas = cantidad
 
     def getFuente(self) -> str:
         return self.fuente

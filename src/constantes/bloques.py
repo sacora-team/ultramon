@@ -6,3 +6,9 @@ class Bloques:
     FUENTE = 5
     TIERRA = 6
     PERSONAJE = 7
+    PUERTA = 8
+    MAESTRO = 9
+    CAMBIO_A_HALL = 10
+    CAMBIO_A_PRIMERA = 11
+    ARBOL_INTERACTUABLE = 12
+    POKEBOLA = 13

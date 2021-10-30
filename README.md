@@ -1,6 +1,6 @@
 # Ultramon
 
-Juego tipo RPG de peleas entre pokemones.
+Juego RPG de aventura, al estilo Pokemon.
 
 ## Requerimientos:
 
