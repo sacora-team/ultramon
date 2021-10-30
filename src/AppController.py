@@ -45,6 +45,9 @@ class AppController(ControllerBase):
                 if self.getDerecha():
                     self.getVista().moverPersonajeConVerificacion(Direcciones.DERECHA)
                     self.resetearKeys()
+                if self.getSeleccionar():
+                    self.getVista().seleccionar()
+                    self.resetearKeys()
                 if self.getMinimizarZoom():
                     self.getVista().zoom(Zooms.MINIMIZAR)
                     self.resetearKeys()

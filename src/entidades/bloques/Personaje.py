@@ -8,6 +8,12 @@ class Personaje(Bloque):
         self.columnaPersonaje: int = self.getCantidadColumnas() // 14
         self.direccionActual: int = Direcciones.DERECHA
         
+    def getDireccionActual(self) -> int:
+        return self.direccionActual
+    
+    def setDireccionActual(self, direccion: int) -> None:
+        self.direccionActual = direccion
+        
     def getFilaPersonaje(self) -> int:
         return self.filaPersonaje
     
