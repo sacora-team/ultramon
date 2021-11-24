@@ -132,6 +132,7 @@ class AppVista(VistaBase):
                 self.getMapa()[14 // 4][6] = Bloques.PASTO
             
             self.getMapa()[10][23] = Bloques.CAMBIO_A_PRIMERA
+
         elif self.habitacionActual == Habitaciones.PRIMERA:
             for fila in range(0, 24):
                 self.getMapa().append([])
@@ -162,32 +163,14 @@ class AppVista(VistaBase):
             self.getMapa()[7][7] = Bloques.ARBOL
             self.getMapa()[7][18] = Bloques.ARBOL
             self.getMapa()[7][16] = Bloques.ARBOL
-
             self.getMapa()[3][3] = Bloques.PIEDRA
-            
+
+            self.getMapa()[2][9] = Bloques.CHARMANDER
+            self.getMapa()[2][11] = Bloques.PIKACHU
+            self.getMapa()[2][13] = Bloques.PAJARO
+
+
             self.getMapa()[11][0] = Bloques.CAMBIO_A_HALL
-
-            i = 0
-            for i in range (0, 3):
-                if i == 0:
-                    self.getMapa()[4][3] = Bloques.PIEDRA
-                    self.getMapa()[3][3] = Bloques.PASTO
-                    i += 1
-                    
-                elif i == 1:
-                    self.getMapa()[4][4] = Bloques.PIEDRA
-                    self.getMapa()[4][3] = Bloques.PASTO
-                    i += 1
-
-                elif i == 2:
-                    self.getMapa()[3][4] = Bloques.PIEDRA
-                    self.getMapa()[4][4] = Bloques.PASTO
-                    i += 1
-
-                elif i == 3:
-                    self.getMapa()[3][3] = Bloques.PIEDRA
-                    self.getMapa()[3][4] = Bloques.PASTO
-                    i = 0
 
         self.definido = True
 
@@ -216,6 +199,12 @@ class AppVista(VistaBase):
                     self.renderizarImagenSinUpdate(Imagenes.ULTRABALL, (self.getAnchoBloque() * columna), (self.getAltoBloque() * fila), (self.getAnchoBloque(), self.getAltoBloque()))
                 if self.getMapa()[fila][columna] == Bloques.COFRE:
                     self.renderizarImagenSinUpdate(Imagenes.COFRE, (self.getAnchoBloque() * columna), (self.getAltoBloque() * fila), (self.getAnchoBloque(), self.getAltoBloque()))
+                if self.getMapa()[fila][columna] == Bloques.CHARMANDER:
+                    self.renderizarImagenSinUpdate(Imagenes.CHARMANDER, (self.getAnchoBloque() * columna), (self.getAltoBloque() * fila), (self.getAnchoBloque(), self.getAltoBloque()))
+                if self.getMapa()[fila][columna] == Bloques.PIKACHU:
+                    self.renderizarImagenSinUpdate(Imagenes.PIKACHU, (self.getAnchoBloque() * columna), (self.getAltoBloque() * fila), (self.getAnchoBloque(), self.getAltoBloque()))
+                if self.getMapa()[fila][columna] == Bloques.PAJARO:
+                    self.renderizarImagenSinUpdate(Imagenes.PAJARO, (self.getAnchoBloque() * columna), (self.getAltoBloque() * fila), (self.getAnchoBloque(), self.getAltoBloque()))
                
         self.renderizarImagen(imagenAsh, (self.getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getAnchoBloque(), self.getAltoBloque()))
             
@@ -383,8 +372,6 @@ class AppVista(VistaBase):
                 self.setPokebolaHallAgarrada(True)
                 # TODO: Agregar pokebola a inventario
                 self.renderizarImagen(Imagenes.PASTO, (self.getAnchoBloque() * self.getColumnaPersonaje() + self.getAnchoBloque()), (self.getAltoBloque() * self.getFilaPersonaje()), (self.getAnchoBloque(), self.getAltoBloque()))
-
-
 
     def zoom(self, accion: int):
         if accion == Zooms.MINIMIZAR:

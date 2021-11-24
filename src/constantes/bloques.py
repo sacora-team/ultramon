@@ -13,3 +13,6 @@ class Bloques:
     ARBOL_POKEBOLA = 12
     POKEBOLA = 13
     COFRE = 14
+    CHARMANDER = 15
+    PIKACHU = 16
+    PAJARO = 17
