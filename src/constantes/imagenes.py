@@ -46,12 +46,12 @@ class Imagenes:
     ASH_REV3 = 'assets/personajes/ash/reversa3.png'
 
     # MAESTROS
-    A1 = 'assets/personajes/maestros/a1.png'
+    MAESTRO = 'assets/personajes/maestros/a1.png'
     A2 = 'assets/personajes/maestros/a2.png'
     A3 = 'assets/personajes/maestros/a3.png'
     A4 = 'assets/personajes/maestros/a4.png'
     A5 = 'assets/personajes/maestros/a5.png'
-    B1 = 'assets/personajes/maestros/b1.png'
+    COMPAÑERA = 'assets/personajes/maestros/b1.png'
     B2 = 'assets/personajes/maestros/b2.png'
     B3 = 'assets/personajes/maestros/b3.png'
     B4 = 'assets/personajes/maestros/b4.png'

@@ -123,6 +123,8 @@ class AppVista(VistaBase):
             self.getMapa()[10][23] = Bloques.PASTO
             self.getMapa()[7][12] = Bloques.FUENTE
             self.getMapa()[14 // 3][8] = Bloques.ARBOL
+            self.getMapa()[4][21] = Bloques.MAESTRO
+            self.getMapa()[7][21] = Bloques.COMPAÑERA
             
             if not self.getCofreHallAbierto():
                 self.getMapa()[14 // 4][6] = Bloques.COFRE
@@ -159,6 +161,68 @@ class AppVista(VistaBase):
                 for columna in range(23, 24):
                     self.getMapa()[fila][columna] = Bloques.PIEDRA
 
+            for fila in range(1, 2):
+                for columna in range(8, 14):
+                    self.getMapa()[fila][columna] = Bloques.AGUA
+
+            for fila in range(5, 6):
+                for columna in range(4, 8):
+                    self.getMapa()[fila][columna] = Bloques.AGUA
+
+            for fila in range(6, 8):
+                for columna in range(8, 9):
+                    self.getMapa()[fila][columna] = Bloques.AGUA
+
+            for fila in range(8, 10):
+                for columna in range(8, 9):
+                    self.getMapa()[fila][columna] = Bloques.AGUA
+
+            for fila in range(14, 16):
+                for columna in range(8, 9):
+                    self.getMapa()[fila][columna] = Bloques.AGUA
+
+            for fila in range(9, 10):
+                for columna in range(9, 22):
+                    self.getMapa()[fila][columna] = Bloques.AGUA
+
+            for fila in range(3, 4):
+                for columna in range(15, 20):
+                    self.getMapa()[fila][columna] = Bloques.AGUA
+
+            self.getMapa()[2][8] = Bloques.AGUA
+            self.getMapa()[2][14] = Bloques.AGUA
+            self.getMapa()[3][8] = Bloques.AGUA
+            self.getMapa()[3][10] = Bloques.AGUA
+            self.getMapa()[3][12] = Bloques.AGUA
+            self.getMapa()[3][14] = Bloques.AGUA
+            self.getMapa()[1][14] = Bloques.AGUA
+            self.getMapa()[4][8] = Bloques.AGUA
+            self.getMapa()[4][14] = Bloques.AGUA
+            self.getMapa()[5][8] = Bloques.AGUA
+            self.getMapa()[5][14] = Bloques.AGUA
+            self.getMapa()[6][4] = Bloques.AGUA
+            self.getMapa()[5][4] = Bloques.AGUA
+            self.getMapa()[8][4] = Bloques.AGUA
+            self.getMapa()[7][4] = Bloques.AGUA
+            self.getMapa()[8][5] = Bloques.AGUA
+            self.getMapa()[8][9] = Bloques.AGUA
+            self.getMapa()[8][10] = Bloques.AGUA
+            self.getMapa()[6][14] = Bloques.AGUA
+            self.getMapa()[6][15] = Bloques.AGUA
+            self.getMapa()[6][16] = Bloques.AGUA
+            self.getMapa()[6][17] = Bloques.AGUA
+            self.getMapa()[6][18] = Bloques.AGUA
+            self.getMapa()[6][19] = Bloques.AGUA
+            self.getMapa()[5][19] = Bloques.AGUA
+            self.getMapa()[5][20] = Bloques.AGUA
+            self.getMapa()[8][21] = Bloques.AGUA
+            self.getMapa()[7][14] = Bloques.AGUA
+            self.getMapa()[7][15] = Bloques.AGUA
+            self.getMapa()[3][20] = Bloques.AGUA
+            self.getMapa()[4][20] = Bloques.AGUA
+
+            self.getMapa()[5][14] = Bloques.PASTO
+
             self.getMapa()[7][5] = Bloques.ARBOL
             self.getMapa()[7][7] = Bloques.ARBOL
             self.getMapa()[7][18] = Bloques.ARBOL
@@ -169,14 +233,13 @@ class AppVista(VistaBase):
             self.getMapa()[2][11] = Bloques.PIKACHU
             self.getMapa()[2][13] = Bloques.PAJARO
 
-
             self.getMapa()[11][0] = Bloques.CAMBIO_A_HALL
 
         self.definido = True
 
 
     def renderizarHabitacion(self, imagenAsh: int) -> None:
-        """" Dada una habitacion, la renderiza en pantalla """ 
+        """" Dada una habitacion, la renderiza en pantalla """
         
         # TODO: Modulizar
         
@@ -205,6 +268,10 @@ class AppVista(VistaBase):
                     self.renderizarImagenSinUpdate(Imagenes.PIKACHU, (self.getAnchoBloque() * columna), (self.getAltoBloque() * fila), (self.getAnchoBloque(), self.getAltoBloque()))
                 if self.getMapa()[fila][columna] == Bloques.PAJARO:
                     self.renderizarImagenSinUpdate(Imagenes.PAJARO, (self.getAnchoBloque() * columna), (self.getAltoBloque() * fila), (self.getAnchoBloque(), self.getAltoBloque()))
+                if self.getMapa()[fila][columna] == Bloques.MAESTRO:
+                    self.renderizarImagenSinUpdate(Imagenes.MAESTRO, (self.getAnchoBloque() * columna), (self.getAltoBloque() * fila), (self.getAnchoBloque(), self.getAltoBloque()))
+                if self.getMapa()[fila][columna] == Bloques.COMPAÑERA:
+                    self.renderizarImagenSinUpdate(Imagenes.COMPAÑERA, (self.getAnchoBloque() * columna), (self.getAltoBloque() * fila), (self.getAnchoBloque(), self.getAltoBloque()))
                
         self.renderizarImagen(imagenAsh, (self.getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getAnchoBloque(), self.getAltoBloque()))
             

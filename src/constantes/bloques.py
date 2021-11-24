@@ -16,3 +16,4 @@ class Bloques:
     CHARMANDER = 15
     PIKACHU = 16
     PAJARO = 17
+    COMPAÑERA = 18
