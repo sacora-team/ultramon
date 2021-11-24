@@ -1,5 +1,6 @@
 from ..base.Bloque import Bloque
 from ...constantes.direcciones import Direcciones
+from .Inventario import Inventario
 
 class Personaje(Bloque):
     def __init__(self) -> None:
@@ -7,6 +8,7 @@ class Personaje(Bloque):
         self.filaPersonaje: int = self.getCantidadFilas() // 2
         self.columnaPersonaje: int = self.getCantidadColumnas() // 14
         self.direccionActual: int = Direcciones.DERECHA
+        self.inventario: Inventario = Inventario()
         
     def getDireccionActual(self) -> int:
         return self.direccionActual
@@ -25,6 +27,9 @@ class Personaje(Bloque):
         
     def setColumnaPersonaje(self, columna: int) -> None:
         self.columnaPersonaje = columna
+        
+    def getInventario(self) -> list:
+        return self.inventario
     
     def moverPersonaje(self, direccion: int) -> None:
         if direccion == Direcciones.ABAJO:
