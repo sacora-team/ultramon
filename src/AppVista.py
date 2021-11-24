@@ -1,10 +1,12 @@
 from pygame import display
+
+from .entidades.personaje.Inventario import Inventario
 from .entidades.base.VistaBase import VistaBase
 from .entidades.base.Bloque import Bloque
 from .constantes.imagenes import Imagenes
 from .constantes.habitaciones import Habitaciones
 from .constantes.bloques import Bloques
-from .entidades.bloques.Personaje import Personaje
+from .entidades.personaje.Personaje import Personaje
 from .constantes.direcciones import Direcciones
 from .constantes.zooms import Zooms
 
@@ -25,6 +27,9 @@ class AppVista(VistaBase):
         
         self.cofreHallAbierto = False
         self.pokebolaHallAgarrada = False
+        self.charmanderPrimeraAgarrado = False
+        self.pikachuPrimeraAgarrado = False
+        self.pajaroPrimeraAgarrado = False
         
         self.definido = False
         self.renderizado = False
@@ -53,6 +58,27 @@ class AppVista(VistaBase):
     def getFilaPersonaje(self) -> int:
         return self.getPersonaje().getFilaPersonaje()
     
+    def getInventarioAsh(self) -> Inventario:
+        return self.getPersonaje().getInventario()
+    
+    def getPajaroPrimeraAgarrado(self) -> bool:
+        return self.pajaroPrimeraAgarrado
+    
+    def setPajaroPrimeraAgarrado(self, bool: bool) -> None:
+        self.pajaroPrimeraAgarrado = bool
+        
+    def getCharmanderPrimeraAgarrado(self) -> bool:
+        return self.charmanderPrimeraAgarrado
+    
+    def setCharmanderPrimeraAgarrada(self, bool: bool) -> None:
+        self.charmanderPrimeraAgarrado = bool
+        
+    def getPikachuPrimeraAgarrado(self) -> bool:
+        return self.pikachuPrimeraAgarrado
+    
+    def setPikachuPrimeraAgarrado(self, bool: bool) -> None:
+        self.pikachuPrimeraAgarrado = bool
+        
     def getPokebolaHallAgarrada(self) -> bool:
         return self.pokebolaHallAgarrada
     
@@ -220,6 +246,8 @@ class AppVista(VistaBase):
             self.getMapa()[7][15] = Bloques.AGUA
             self.getMapa()[3][20] = Bloques.AGUA
             self.getMapa()[4][20] = Bloques.AGUA
+            self.getMapa()[2][10] = Bloques.AGUA
+            self.getMapa()[2][12] = Bloques.AGUA
 
             self.getMapa()[5][14] = Bloques.PASTO
 
@@ -229,9 +257,14 @@ class AppVista(VistaBase):
             self.getMapa()[7][16] = Bloques.ARBOL
             self.getMapa()[3][3] = Bloques.PIEDRA
 
-            self.getMapa()[2][9] = Bloques.CHARMANDER
-            self.getMapa()[2][11] = Bloques.PIKACHU
-            self.getMapa()[2][13] = Bloques.PAJARO
+            if not self.getCharmanderPrimeraAgarrado():
+                self.getMapa()[2][9] = Bloques.CHARMANDER
+                
+            if not self.getPikachuPrimeraAgarrado():
+                self.getMapa()[2][11] = Bloques.PIKACHU
+                
+            if not self.getPajaroPrimeraAgarrado():
+                self.getMapa()[2][13] = Bloques.PAJARO
 
             self.getMapa()[11][0] = Bloques.CAMBIO_A_HALL
 
@@ -376,6 +409,7 @@ class AppVista(VistaBase):
 
 
     def seleccionar(self) -> None:
+        """ Se ejecuta cuando se clickea enter """
         if self.getDireccionPersonaje() == Direcciones.ABAJO:
             
             # Se selecciona un arbol-pokebola
@@ -389,7 +423,10 @@ class AppVista(VistaBase):
             elif self.getMapa()[self.getFilaPersonaje() + 1][self.getColumnaPersonaje()] == Bloques.POKEBOLA:
                 self.getMapa()[14 // 4][6] = Bloques.PASTO
                 self.setPokebolaHallAgarrada(True)
-                # TODO: Agregar pokebola a inventario
+                
+                if (self.getInventarioAsh().inventarioConEspacio()):
+                    self.getInventarioAsh().agregarItem(Bloques.POKEBOLA)
+                
                 self.renderizarImagen(Imagenes.PASTO, (self.getAnchoBloque() * self.getColumnaPersonaje()), (self.getAltoBloque() * self.getFilaPersonaje() + self.getAltoBloque()), (self.getAnchoBloque(), self.getAltoBloque()))
 
         elif self.getDireccionPersonaje() == Direcciones.ARRIBA:
@@ -405,7 +442,40 @@ class AppVista(VistaBase):
             elif self.getMapa()[self.getFilaPersonaje() - 1][self.getColumnaPersonaje()] == Bloques.POKEBOLA:
                 self.getMapa()[14 // 4][6] = Bloques.PASTO
                 self.setPokebolaHallAgarrada(True)
-                # TODO: Agregar pokebola a inventario
+                
+                if (self.getInventarioAsh().inventarioConEspacio()):
+                    self.getInventarioAsh().agregarItem(Bloques.POKEBOLA)
+                
+                self.renderizarImagen(Imagenes.PASTO, (self.getAnchoBloque() * self.getColumnaPersonaje()), (self.getAltoBloque() * self.getFilaPersonaje() - self.getAltoBloque()), (self.getAnchoBloque(), self.getAltoBloque()))
+            
+            # Se selecciona un charmander
+            elif self.getMapa()[self.getFilaPersonaje() - 1][self.getColumnaPersonaje()] == Bloques.CHARMANDER:
+                self.getMapa()[14 // 4][6] = Bloques.PASTO
+                self.setCharmanderPrimeraAgarrada(True)
+                
+                if (self.getInventarioAsh().inventarioConEspacio()):
+                    self.getInventarioAsh().agregarItem(Bloques.CHARMANDER)
+                
+                self.renderizarImagen(Imagenes.PASTO, (self.getAnchoBloque() * self.getColumnaPersonaje()), (self.getAltoBloque() * self.getFilaPersonaje() - self.getAltoBloque()), (self.getAnchoBloque(), self.getAltoBloque()))
+                
+            # Se selecciona un pikachu
+            elif self.getMapa()[self.getFilaPersonaje() - 1][self.getColumnaPersonaje()] == Bloques.PIKACHU:
+                self.getMapa()[14 // 4][6] = Bloques.PASTO
+                self.setPikachuPrimeraAgarrado(True)
+                
+                if (self.getInventarioAsh().inventarioConEspacio()):
+                    self.getInventarioAsh().agregarItem(Bloques.PIKACHU)
+                
+                self.renderizarImagen(Imagenes.PASTO, (self.getAnchoBloque() * self.getColumnaPersonaje()), (self.getAltoBloque() * self.getFilaPersonaje() - self.getAltoBloque()), (self.getAnchoBloque(), self.getAltoBloque()))
+            
+            # Se selecciona un pajaro
+            elif self.getMapa()[self.getFilaPersonaje() - 1][self.getColumnaPersonaje()] == Bloques.PAJARO:
+                self.getMapa()[14 // 4][6] = Bloques.PASTO
+                self.setPajaroPrimeraAgarrado(True)
+                
+                if (self.getInventarioAsh().inventarioConEspacio()):
+                    self.getInventarioAsh().agregarItem(Bloques.PAJARO)
+                
                 self.renderizarImagen(Imagenes.PASTO, (self.getAnchoBloque() * self.getColumnaPersonaje()), (self.getAltoBloque() * self.getFilaPersonaje() - self.getAltoBloque()), (self.getAnchoBloque(), self.getAltoBloque()))
             
         elif self.getDireccionPersonaje() == Direcciones.IZQUIERDA:
@@ -421,7 +491,10 @@ class AppVista(VistaBase):
             elif self.getMapa()[self.getFilaPersonaje()][self.getColumnaPersonaje() - 1] == Bloques.POKEBOLA:
                 self.getMapa()[14 // 4][6] = Bloques.PASTO
                 self.setPokebolaHallAgarrada(True)
-                # TODO: Agregar pokebola a inventario
+                
+                if (self.getInventarioAsh().inventarioConEspacio()):
+                    self.getInventarioAsh().agregarItem(Bloques.POKEBOLA)
+                
                 self.renderizarImagen(Imagenes.PASTO, (self.getAnchoBloque() * self.getColumnaPersonaje() - self.getAnchoBloque()), (self.getAltoBloque() * self.getFilaPersonaje()), (self.getAnchoBloque(), self.getAltoBloque()))
             
         elif self.getDireccionPersonaje() == Direcciones.DERECHA:
@@ -437,10 +510,15 @@ class AppVista(VistaBase):
             elif self.getMapa()[self.getFilaPersonaje()][self.getColumnaPersonaje() + 1] == Bloques.POKEBOLA:
                 self.getMapa()[14 // 4][6] = Bloques.PASTO
                 self.setPokebolaHallAgarrada(True)
-                # TODO: Agregar pokebola a inventario
+                
+                if (self.getInventarioAsh().inventarioConEspacio()):
+                    self.getInventarioAsh().agregarItem(Bloques.POKEBOLA)
+                
                 self.renderizarImagen(Imagenes.PASTO, (self.getAnchoBloque() * self.getColumnaPersonaje() + self.getAnchoBloque()), (self.getAltoBloque() * self.getFilaPersonaje()), (self.getAnchoBloque(), self.getAltoBloque()))
 
+
     def zoom(self, accion: int):
+        """ Zoom del juego """
         if accion == Zooms.MINIMIZAR:
             if self.getCantidadColumnas() != self.maxZoom:
                 self.cantidadColumnas = self.cantidadColumnas + 1
