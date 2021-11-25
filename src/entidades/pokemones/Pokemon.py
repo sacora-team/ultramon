@@ -1,10 +1,9 @@
-from .Ataques import Ataque
+from .Ataque import Ataque
 from ...constantes.estadosPokemon import EstadosPokemon
 
-class Pokemon(Bloque):
+class Pokemon():
     def __init__(self) -> None:
-        super().__init__()
-        self.ataques: Ataques = Ataque()
+        self.ataques: Ataque = Ataque()
         self.vida = 50
         self.estado = EstadosPokemon()
 

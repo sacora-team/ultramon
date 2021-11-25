@@ -1,5 +1,6 @@
 from pygame import display
 
+from .entidades.Habitacion import Habitacion
 from .entidades.personaje.Inventario import Inventario
 from .entidades.base.VistaBase import VistaBase
 from .entidades.base.Bloque import Bloque
@@ -8,28 +9,21 @@ from .constantes.habitaciones import Habitaciones
 from .constantes.bloques import Bloques
 from .entidades.personaje.Personaje import Personaje
 from .constantes.direcciones import Direcciones
+from .entidades.Mapa import Mapa
 from .constantes.zooms import Zooms
 
 
 class AppVista(VistaBase):
     def __init__(self) -> None:
         super().__init__()
-        self.mapa = []
+        self.mapa = Mapa()
         self.personaje = Personaje()
         self.bloque = Bloque()
-        
-        self.caminables = [Bloques.PASTO, Bloques.TIERRA]
 
         self.maxZoom = 24
         self.minZoom = 18
         
         self.habitacionActual = Habitaciones.HALL
-        
-        self.cofreHallAbierto = False
-        self.pokebolaHallAgarrada = False
-        self.charmanderPrimeraAgarrado = False
-        self.pikachuPrimeraAgarrado = False
-        self.pajaroPrimeraAgarrado = False
         
         self.definido = False
         self.renderizado = False
@@ -42,6 +36,9 @@ class AppVista(VistaBase):
         
     def getBloque(self) -> Bloque:
         return self.bloque
+    
+    def getHabitacionClase(self) -> Habitacion:
+        return self.getMapaClase().getHabitacion()
     
     def getDireccionPersonaje(self) -> int:
         return self.getPersonaje().getDireccionActual()
@@ -61,44 +58,17 @@ class AppVista(VistaBase):
     def getInventarioAsh(self) -> Inventario:
         return self.getPersonaje().getInventario()
     
-    def getPajaroPrimeraAgarrado(self) -> bool:
-        return self.pajaroPrimeraAgarrado
-    
-    def setPajaroPrimeraAgarrado(self, bool: bool) -> None:
-        self.pajaroPrimeraAgarrado = bool
-        
-    def getCharmanderPrimeraAgarrado(self) -> bool:
-        return self.charmanderPrimeraAgarrado
-    
-    def setCharmanderPrimeraAgarrada(self, bool: bool) -> None:
-        self.charmanderPrimeraAgarrado = bool
-        
-    def getPikachuPrimeraAgarrado(self) -> bool:
-        return self.pikachuPrimeraAgarrado
-    
-    def setPikachuPrimeraAgarrado(self, bool: bool) -> None:
-        self.pikachuPrimeraAgarrado = bool
-        
-    def getPokebolaHallAgarrada(self) -> bool:
-        return self.pokebolaHallAgarrada
-    
-    def setPokebolaHallAgarrada(self, bool: bool) -> None:
-        self.pokebolaHallAgarrada = bool
-        
-    def getCofreHallAbierto(self) -> bool:
-        return self.cofreHallAbierto
-    
-    def setCofreHallAbierto(self, bool: bool) -> None:
-        self.cofreHallAbierto = bool
+    def getMapaClase(self) -> Mapa:
+        return self.mapa
     
     def getMapa(self) -> list:
-        return self.mapa
+        return self.mapa.getMapa()
     
     def getPersonaje(self) -> Personaje:
         return self.personaje
 
     def limpiarDefiniciones(self) -> None:
-        self.mapa = []
+        self.getMapaClase().limpiarDefiniciones()
         
     def comenzar(self):
         if self.definido or self.renderizado:
@@ -110,163 +80,10 @@ class AppVista(VistaBase):
     def definirHabitacion(self) -> None:
         """ Dada una habitacion, define sus bloques """
         
-        # TODO: Modularizar
-        
         if self.definido:
             return
-                 
-        if self.habitacionActual == Habitaciones.HALL:            
-            
-            for fila in range(0, 14):
-                self.getMapa().append([])
-                for columna in range(0, 24):
-                    self.getMapa()[fila].append(Bloques.PASTO)
         
-            for fila in range(1, 2):
-                for columna in range(0, 24):
-                    self.getMapa()[fila][columna] = Bloques.AGUA
-        
-            for fila in range(12, 13):
-                for columna in range(0, 24):
-                    self.getMapa()[fila][columna] = Bloques.AGUA
-
-            for fila in range(0, 1):
-                for columna in range(0, 24):
-                    self.getMapa()[fila][columna] = Bloques.ARBOL
-        
-            for fila in range(13, 14):
-                for columna in range(0, 24):
-                    self.getMapa()[fila][columna] = Bloques.ARBOL
-
-            for fila in range(0, 14):
-                for columna in range(0, 1):
-                    self.getMapa()[fila][columna] = Bloques.ARBOL
-
-            for fila in range(0, 14):
-                for columna in range(23, 24):
-                    self.getMapa()[fila][columna] = Bloques.ARBOL
-
-            self.getMapa()[10][23] = Bloques.PASTO
-            self.getMapa()[7][12] = Bloques.FUENTE
-            self.getMapa()[14 // 3][8] = Bloques.ARBOL
-            self.getMapa()[4][21] = Bloques.MAESTRO
-            self.getMapa()[7][21] = Bloques.COMPAÑERA
-            
-            if not self.getCofreHallAbierto():
-                self.getMapa()[14 // 4][6] = Bloques.COFRE
-            elif self.getCofreHallAbierto() and not self.getPokebolaHallAgarrada():
-                self.getMapa()[14 // 4][6] = Bloques.POKEBOLA
-            elif self.getCofreHallAbierto() and self.getPokebolaHallAgarrada:
-                self.getMapa()[14 // 4][6] = Bloques.PASTO
-            
-            self.getMapa()[10][23] = Bloques.CAMBIO_A_PRIMERA
-
-        elif self.habitacionActual == Habitaciones.PRIMERA:
-            for fila in range(0, 24):
-                self.getMapa().append([])
-                for columna in range(0, 24):
-                    self.getMapa()[fila].append(Bloques.PASTO)
-
-            for fila in range(5, 8):
-                for columna in range(10, 13):
-                    self.getMapa()[fila][columna] = Bloques.AGUA
-
-            for fila in range(0, 14):
-                for columna in range(0, 1):
-                    self.getMapa()[fila][columna] = Bloques.ARBOL
-
-            for fila in range(0, 1):
-                for columna in range(1, 24):
-                    self.getMapa()[fila][columna] = Bloques.PIEDRA
-
-            for fila in range(13, 14):
-                for columna in range(1, 24):
-                    self.getMapa()[fila][columna] = Bloques.PIEDRA
-
-            for fila in range(0, 14):
-                for columna in range(23, 24):
-                    self.getMapa()[fila][columna] = Bloques.PIEDRA
-
-            for fila in range(1, 2):
-                for columna in range(8, 14):
-                    self.getMapa()[fila][columna] = Bloques.AGUA
-
-            for fila in range(5, 6):
-                for columna in range(4, 8):
-                    self.getMapa()[fila][columna] = Bloques.AGUA
-
-            for fila in range(6, 8):
-                for columna in range(8, 9):
-                    self.getMapa()[fila][columna] = Bloques.AGUA
-
-            for fila in range(8, 10):
-                for columna in range(8, 9):
-                    self.getMapa()[fila][columna] = Bloques.AGUA
-
-            for fila in range(14, 16):
-                for columna in range(8, 9):
-                    self.getMapa()[fila][columna] = Bloques.AGUA
-
-            for fila in range(9, 10):
-                for columna in range(9, 22):
-                    self.getMapa()[fila][columna] = Bloques.AGUA
-
-            for fila in range(3, 4):
-                for columna in range(15, 20):
-                    self.getMapa()[fila][columna] = Bloques.AGUA
-
-            self.getMapa()[2][8] = Bloques.AGUA
-            self.getMapa()[2][14] = Bloques.AGUA
-            self.getMapa()[3][8] = Bloques.AGUA
-            self.getMapa()[3][10] = Bloques.AGUA
-            self.getMapa()[3][12] = Bloques.AGUA
-            self.getMapa()[3][14] = Bloques.AGUA
-            self.getMapa()[1][14] = Bloques.AGUA
-            self.getMapa()[4][8] = Bloques.AGUA
-            self.getMapa()[4][14] = Bloques.AGUA
-            self.getMapa()[5][8] = Bloques.AGUA
-            self.getMapa()[5][14] = Bloques.AGUA
-            self.getMapa()[6][4] = Bloques.AGUA
-            self.getMapa()[5][4] = Bloques.AGUA
-            self.getMapa()[8][4] = Bloques.AGUA
-            self.getMapa()[7][4] = Bloques.AGUA
-            self.getMapa()[8][5] = Bloques.AGUA
-            self.getMapa()[8][9] = Bloques.AGUA
-            self.getMapa()[8][10] = Bloques.AGUA
-            self.getMapa()[6][14] = Bloques.AGUA
-            self.getMapa()[6][15] = Bloques.AGUA
-            self.getMapa()[6][16] = Bloques.AGUA
-            self.getMapa()[6][17] = Bloques.AGUA
-            self.getMapa()[6][18] = Bloques.AGUA
-            self.getMapa()[6][19] = Bloques.AGUA
-            self.getMapa()[5][19] = Bloques.AGUA
-            self.getMapa()[5][20] = Bloques.AGUA
-            self.getMapa()[8][21] = Bloques.AGUA
-            self.getMapa()[7][14] = Bloques.AGUA
-            self.getMapa()[7][15] = Bloques.AGUA
-            self.getMapa()[3][20] = Bloques.AGUA
-            self.getMapa()[4][20] = Bloques.AGUA
-            self.getMapa()[2][10] = Bloques.AGUA
-            self.getMapa()[2][12] = Bloques.AGUA
-
-            self.getMapa()[5][14] = Bloques.PASTO
-
-            self.getMapa()[7][5] = Bloques.ARBOL
-            self.getMapa()[7][7] = Bloques.ARBOL
-            self.getMapa()[7][18] = Bloques.ARBOL
-            self.getMapa()[7][16] = Bloques.ARBOL
-            self.getMapa()[3][3] = Bloques.PIEDRA
-
-            if not self.getCharmanderPrimeraAgarrado():
-                self.getMapa()[2][9] = Bloques.CHARMANDER
-                
-            if not self.getPikachuPrimeraAgarrado():
-                self.getMapa()[2][11] = Bloques.PIKACHU
-                
-            if not self.getPajaroPrimeraAgarrado():
-                self.getMapa()[2][13] = Bloques.PAJARO
-
-            self.getMapa()[11][0] = Bloques.CAMBIO_A_HALL
+        self.getMapaClase().definirHabitacion(self.habitacionActual)
 
         self.definido = True
 
@@ -274,39 +91,10 @@ class AppVista(VistaBase):
     def renderizarHabitacion(self, imagenAsh: int) -> None:
         """" Dada una habitacion, la renderiza en pantalla """
         
-        # TODO: Modulizar
-        
         if self.renderizado:
             return
         
-        for fila in range(0, self.getCantidadFilas()):
-            for columna in range(0, self.getCantidadColumnas()):
-                if self.getMapa()[fila][columna] in [Bloques.COFRE, Bloques.PASTO, Bloques.CAMBIO_A_PRIMERA, Bloques.CAMBIO_A_HALL]:
-                    self.renderizarImagenSinUpdate(Imagenes.PASTO, (self.getAnchoBloque() * columna), (self.getAltoBloque() * fila), (self.getAnchoBloque(), self.getAltoBloque()))
-                if self.getMapa()[fila][columna] == Bloques.AGUA:
-                    self.renderizarImagenSinUpdate(Imagenes.AGUA, (self.getAnchoBloque() * columna), (self.getAltoBloque() * fila), (self.getAnchoBloque(), self.getAltoBloque()))
-                if self.getMapa()[fila][columna] in [Bloques.ARBOL, Bloques.ARBOL_POKEBOLA]:
-                    self.renderizarImagenSinUpdate(Imagenes.ARBOL, (self.getAnchoBloque() * columna), (self.getAltoBloque() * fila), (self.getAnchoBloque(), self.getAltoBloque()))
-                if self.getMapa()[fila][columna] == Bloques.FUENTE:
-                    self.renderizarImagenSinUpdate(Imagenes.FUENTE, (self.getAnchoBloque() * columna), (self.getAltoBloque() * fila), (self.getAnchoBloque(), self.getAltoBloque()))
-                if self.getMapa()[fila][columna] == Bloques.PIEDRA:
-                    self.renderizarImagenSinUpdate(Imagenes.PIEDRA, (self.getAnchoBloque() * columna), (self.getAltoBloque() * fila), (self.getAnchoBloque(), self.getAltoBloque()))
-                if self.getMapa()[fila][columna] == Bloques.POKEBOLA:
-                    self.renderizarImagenSinUpdate(Imagenes.ULTRABALL, (self.getAnchoBloque() * columna), (self.getAltoBloque() * fila), (self.getAnchoBloque(), self.getAltoBloque()))
-                if self.getMapa()[fila][columna] == Bloques.COFRE:
-                    self.renderizarImagenSinUpdate(Imagenes.COFRE, (self.getAnchoBloque() * columna), (self.getAltoBloque() * fila), (self.getAnchoBloque(), self.getAltoBloque()))
-                if self.getMapa()[fila][columna] == Bloques.CHARMANDER:
-                    self.renderizarImagenSinUpdate(Imagenes.CHARMANDER, (self.getAnchoBloque() * columna), (self.getAltoBloque() * fila), (self.getAnchoBloque(), self.getAltoBloque()))
-                if self.getMapa()[fila][columna] == Bloques.PIKACHU:
-                    self.renderizarImagenSinUpdate(Imagenes.PIKACHU, (self.getAnchoBloque() * columna), (self.getAltoBloque() * fila), (self.getAnchoBloque(), self.getAltoBloque()))
-                if self.getMapa()[fila][columna] == Bloques.PAJARO:
-                    self.renderizarImagenSinUpdate(Imagenes.PAJARO, (self.getAnchoBloque() * columna), (self.getAltoBloque() * fila), (self.getAnchoBloque(), self.getAltoBloque()))
-                if self.getMapa()[fila][columna] == Bloques.MAESTRO:
-                    self.renderizarImagenSinUpdate(Imagenes.MAESTRO, (self.getAnchoBloque() * columna), (self.getAltoBloque() * fila), (self.getAnchoBloque(), self.getAltoBloque()))
-                if self.getMapa()[fila][columna] == Bloques.COMPAÑERA:
-                    self.renderizarImagenSinUpdate(Imagenes.COMPAÑERA, (self.getAnchoBloque() * columna), (self.getAltoBloque() * fila), (self.getAnchoBloque(), self.getAltoBloque()))
-               
-        self.renderizarImagen(imagenAsh, (self.getAnchoBloque() * self.getPersonaje().getColumnaPersonaje()), (self.getAltoBloque() * self.getPersonaje().getFilaPersonaje()), (self.getAnchoBloque(), self.getAltoBloque()))
+        self.getMapaClase().renderizarHabitacion(imagenAsh, self.getColumnaPersonaje(), self.getFilaPersonaje())
             
         self.renderizado = True
         
@@ -337,8 +125,6 @@ class AppVista(VistaBase):
 
         # Verifica que el bloque sea pasto o tierra (caminables)
         # Cuando hace el movimiento, rellena el bloque anterior del personaje con el contenido del bloque sobre el que estaba        
-        
-        # TODO: Refactorizar
         
         if direccion == Direcciones.ABAJO:
             # Renderiza pasto encima
@@ -415,14 +201,14 @@ class AppVista(VistaBase):
             # Se selecciona un arbol-pokebola
             if self.getMapa()[self.getFilaPersonaje() + 1][self.getColumnaPersonaje()] == Bloques.COFRE:
                 self.getMapa()[14 // 4][6] = Bloques.POKEBOLA
-                self.setCofreHallAbierto(True)
+                self.getHabitacionClase().setCofreHallAbierto(True)
                 self.renderizarImagenSinUpdate(Imagenes.PASTO, (self.getAnchoBloque() * self.getColumnaPersonaje()), (self.getAltoBloque() * self.getFilaPersonaje() + self.getAltoBloque()), (self.getAnchoBloque(), self.getAltoBloque()))
                 self.renderizarImagen(Imagenes.ULTRABALL, (self.getAnchoBloque() * self.getColumnaPersonaje()), (self.getAltoBloque() * self.getFilaPersonaje() + self.getAltoBloque()), (self.getAnchoBloque() // 2, self.getAltoBloque() // 2))
             
             # Se selecciona una pokebola
             elif self.getMapa()[self.getFilaPersonaje() + 1][self.getColumnaPersonaje()] == Bloques.POKEBOLA:
                 self.getMapa()[14 // 4][6] = Bloques.PASTO
-                self.setPokebolaHallAgarrada(True)
+                self.getHabitacionClase().setPokebolaHallAgarrada(True)
                 
                 if (self.getInventarioAsh().inventarioConEspacio()):
                     self.getInventarioAsh().agregarItem(Bloques.POKEBOLA)
@@ -434,14 +220,14 @@ class AppVista(VistaBase):
             # Se selecciona un arbol-pokebola
             if self.getMapa()[self.getFilaPersonaje() - 1][self.getColumnaPersonaje()] == Bloques.COFRE:
                 self.getMapa()[14 // 4][6] = Bloques.POKEBOLA
-                self.setCofreHallAbierto(True)
+                self.getHabitacionClase().setCofreHallAbierto(True)
                 self.renderizarImagenSinUpdate(Imagenes.PASTO, (self.getAnchoBloque() * self.getColumnaPersonaje()), (self.getAltoBloque() * self.getFilaPersonaje() - self.getAltoBloque()), (self.getAnchoBloque(), self.getAltoBloque()))
                 self.renderizarImagen(Imagenes.ULTRABALL, (self.getAnchoBloque() * self.getColumnaPersonaje()), (self.getAltoBloque() * self.getFilaPersonaje() - self.getAltoBloque()), (self.getAnchoBloque(), self.getAltoBloque()))
             
             # Se selecciona una pokebola
             elif self.getMapa()[self.getFilaPersonaje() - 1][self.getColumnaPersonaje()] == Bloques.POKEBOLA:
                 self.getMapa()[14 // 4][6] = Bloques.PASTO
-                self.setPokebolaHallAgarrada(True)
+                self.getHabitacionClase().setPokebolaHallAgarrada(True)
                 
                 if (self.getInventarioAsh().inventarioConEspacio()):
                     self.getInventarioAsh().agregarItem(Bloques.POKEBOLA)
@@ -451,7 +237,7 @@ class AppVista(VistaBase):
             # Se selecciona un charmander
             elif self.getMapa()[self.getFilaPersonaje() - 1][self.getColumnaPersonaje()] == Bloques.CHARMANDER:
                 self.getMapa()[14 // 4][6] = Bloques.PASTO
-                self.setCharmanderPrimeraAgarrada(True)
+                self.getHabitacionClase().setCharmanderPrimeraAgarrada(True)
                 
                 if (self.getInventarioAsh().inventarioConEspacio()):
                     self.getInventarioAsh().agregarItem(Bloques.CHARMANDER)
@@ -461,7 +247,7 @@ class AppVista(VistaBase):
             # Se selecciona un pikachu
             elif self.getMapa()[self.getFilaPersonaje() - 1][self.getColumnaPersonaje()] == Bloques.PIKACHU:
                 self.getMapa()[14 // 4][6] = Bloques.PASTO
-                self.setPikachuPrimeraAgarrado(True)
+                self.getHabitacionClase().setPikachuPrimeraAgarrado(True)
                 
                 if (self.getInventarioAsh().inventarioConEspacio()):
                     self.getInventarioAsh().agregarItem(Bloques.PIKACHU)
@@ -471,7 +257,7 @@ class AppVista(VistaBase):
             # Se selecciona un pajaro
             elif self.getMapa()[self.getFilaPersonaje() - 1][self.getColumnaPersonaje()] == Bloques.PAJARO:
                 self.getMapa()[14 // 4][6] = Bloques.PASTO
-                self.setPajaroPrimeraAgarrado(True)
+                self.getHabitacionClase().setPajaroPrimeraAgarrado(True)
                 
                 if (self.getInventarioAsh().inventarioConEspacio()):
                     self.getInventarioAsh().agregarItem(Bloques.PAJARO)
@@ -483,14 +269,14 @@ class AppVista(VistaBase):
             # Se selecciona un arbol pokebola
             if self.getMapa()[self.getFilaPersonaje()][self.getColumnaPersonaje() - 1] == Bloques.COFRE:
                 self.getMapa()[14 // 4][6] = Bloques.POKEBOLA
-                self.setCofreHallAbierto(True)
+                self.getHabitacionClase().setCofreHallAbierto(True)
                 self.renderizarImagenSinUpdate(Imagenes.PASTO, (self.getAnchoBloque() * self.getColumnaPersonaje() - self.getAnchoBloque()), (self.getAltoBloque() * self.getFilaPersonaje()), (self.getAnchoBloque(), self.getAltoBloque()))
                 self.renderizarImagen(Imagenes.ULTRABALL, (self.getAnchoBloque() * self.getColumnaPersonaje() - self.getAnchoBloque()), (self.getAltoBloque() * self.getFilaPersonaje()), (self.getAnchoBloque(), self.getAltoBloque()))
 
             # Se selecciona una pokebola
             elif self.getMapa()[self.getFilaPersonaje()][self.getColumnaPersonaje() - 1] == Bloques.POKEBOLA:
                 self.getMapa()[14 // 4][6] = Bloques.PASTO
-                self.setPokebolaHallAgarrada(True)
+                self.getHabitacionClase().setPokebolaHallAgarrada(True)
                 
                 if (self.getInventarioAsh().inventarioConEspacio()):
                     self.getInventarioAsh().agregarItem(Bloques.POKEBOLA)
@@ -502,14 +288,14 @@ class AppVista(VistaBase):
             # Se selecciona un arbol pokebola
             if self.getMapa()[self.getFilaPersonaje()][self.getColumnaPersonaje() + 1] == Bloques.COFRE:
                 self.getMapa()[14 // 4][6] = Bloques.POKEBOLA
-                self.setCofreHallAbierto(True)
+                self.getHabitacionClase().setCofreHallAbierto(True)
                 self.renderizarImagenSinUpdate(Imagenes.PASTO, (self.getAnchoBloque() * self.getColumnaPersonaje() + self.getAnchoBloque()), (self.getAltoBloque() * self.getFilaPersonaje()), (self.getAnchoBloque(), self.getAltoBloque()))
                 self.renderizarImagen(Imagenes.ULTRABALL, (self.getAnchoBloque() * self.getColumnaPersonaje() + self.getAnchoBloque()), (self.getAltoBloque() * self.getFilaPersonaje()), (self.getAnchoBloque(), self.getAltoBloque()))
                 
             # Se selecciona una pokebola
             elif self.getMapa()[self.getFilaPersonaje()][self.getColumnaPersonaje() + 1] == Bloques.POKEBOLA:
                 self.getMapa()[14 // 4][6] = Bloques.PASTO
-                self.setPokebolaHallAgarrada(True)
+                self.getHabitacionClase().setPokebolaHallAgarrada(True)
                 
                 if (self.getInventarioAsh().inventarioConEspacio()):
                     self.getInventarioAsh().agregarItem(Bloques.POKEBOLA)
