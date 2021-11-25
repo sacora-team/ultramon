@@ -40,7 +40,3 @@ class Personaje(Bloque):
             self.setColumnaPersonaje(self.getColumnaPersonaje() - 1)
         elif direccion == Direcciones.DERECHA:
             self.setColumnaPersonaje(self.getColumnaPersonaje() + 1)
-            
-        
-            
-            
