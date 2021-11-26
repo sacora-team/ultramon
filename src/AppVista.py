@@ -61,7 +61,7 @@ class AppVista(VistaBase):
     def getMapaClase(self) -> Mapa:
         return self.mapa
     
-    def getMapa(self) -> list:
+    def getMapa(self) -> list[list[Bloque]]:
         return self.mapa.getMapa()
     
     def getPersonaje(self) -> Personaje:
@@ -130,7 +130,7 @@ class AppVista(VistaBase):
             # Renderiza pasto encima
             self.renderizarImagenSinUpdate(Imagenes.PASTO, (self.getAnchoBloque() * self.getColumnaPersonaje()), (self.getAltoBloque() * self.getFilaPersonaje()), (self.getAnchoBloque(), self.getAltoBloque()))
             # Mueve al personaje
-            if self.getMapa()[self.getFilaPersonaje() + 1][self.getColumnaPersonaje()] == Bloques.PASTO:
+            if self.getMapa()[self.getFilaPersonaje() + 1][self.getColumnaPersonaje()].getTipo() == Bloques.PASTO:
                 self.getPersonaje().moverPersonaje(direccion)
                 self.renderizarImagen(Imagenes.ASH_FR1, (self.getAnchoBloque() * self.getColumnaPersonaje()), (self.getAltoBloque() * self.getFilaPersonaje()), (self.getAnchoBloque(), self.getAltoBloque()))
             else:
@@ -143,7 +143,7 @@ class AppVista(VistaBase):
             # Renderiza pasto encima
             self.renderizarImagenSinUpdate(Imagenes.PASTO, (self.getAnchoBloque() * self.getColumnaPersonaje()), (self.getAltoBloque() * self.getFilaPersonaje()), (self.getAnchoBloque(), self.getAltoBloque()))
             # Mueve al personaje
-            if self.getMapa()[self.getFilaPersonaje() - 1][self.getColumnaPersonaje()] == Bloques.PASTO:
+            if self.getMapa()[self.getFilaPersonaje() - 1][self.getColumnaPersonaje()].getTipo() == Bloques.PASTO:
                 self.getPersonaje().moverPersonaje(direccion)
                 self.renderizarImagen(Imagenes.ASH_REV1, (self.getAnchoBloque() * self.getColumnaPersonaje()), (self.getAltoBloque() * self.getFilaPersonaje()), (self.getAnchoBloque(), self.getAltoBloque()))
             else:
@@ -158,13 +158,13 @@ class AppVista(VistaBase):
             self.renderizarImagenSinUpdate(Imagenes.PASTO, (self.getAnchoBloque() * self.getColumnaPersonaje()), (self.getAltoBloque() * self.getFilaPersonaje()), (self.getAnchoBloque(), self.getAltoBloque()))
             
             # Cambia de hall a primera
-            if self.habitacionActual == Habitaciones.PRIMERA and self.getMapa()[self.getFilaPersonaje()][self.getColumnaPersonaje() - 1] == Bloques.CAMBIO_A_HALL:
+            if self.habitacionActual == Habitaciones.PRIMERA and self.getMapa()[self.getFilaPersonaje()][self.getColumnaPersonaje() - 1].getTipo() == Bloques.CAMBIO_A_HALL:
                 self.onCambiarHabitacion(Habitaciones.HALL)
             
             else: 
             
                 # Mueve al personaje
-                if self.getMapa()[self.getFilaPersonaje()][self.getColumnaPersonaje() - 1] == Bloques.PASTO:
+                if self.getMapa()[self.getFilaPersonaje()][self.getColumnaPersonaje() - 1].getTipo() == Bloques.PASTO:
                     self.getPersonaje().moverPersonaje(direccion)
                     self.renderizarImagen(Imagenes.ASH_IZQ1, (self.getAnchoBloque() * self.getColumnaPersonaje()), (self.getAltoBloque() * self.getFilaPersonaje()), (self.getAnchoBloque(), self.getAltoBloque()))
                 else:
@@ -178,13 +178,13 @@ class AppVista(VistaBase):
             self.renderizarImagenSinUpdate(Imagenes.PASTO, (self.getAnchoBloque() * self.getColumnaPersonaje()), (self.getAltoBloque() * self.getFilaPersonaje()), (self.getAnchoBloque(), self.getAltoBloque()))
             
             # Cambia de hall a primera
-            if self.habitacionActual == Habitaciones.HALL and self.getMapa()[self.getFilaPersonaje()][self.getColumnaPersonaje() + 1] == Bloques.CAMBIO_A_PRIMERA:
+            if self.habitacionActual == Habitaciones.HALL and self.getMapa()[self.getFilaPersonaje()][self.getColumnaPersonaje() + 1].getTipo() == Bloques.CAMBIO_A_PRIMERA:
                 self.onCambiarHabitacion(Habitaciones.PRIMERA)
             
             else:
             
                 # Mueve al personaje
-                if self.getMapa()[self.getFilaPersonaje()][self.getColumnaPersonaje() + 1] == Bloques.PASTO:
+                if self.getMapa()[self.getFilaPersonaje()][self.getColumnaPersonaje() + 1].getTipo() == Bloques.PASTO:
                     self.getPersonaje().moverPersonaje(direccion)
                     self.renderizarImagen(Imagenes.ASH_DER1, (self.getAnchoBloque() * self.getColumnaPersonaje()), (self.getAltoBloque() * self.getFilaPersonaje()), (self.getAnchoBloque(), self.getAltoBloque()))
                 else:
@@ -199,15 +199,15 @@ class AppVista(VistaBase):
         if self.getDireccionPersonaje() == Direcciones.ABAJO:
             
             # Se selecciona un arbol-pokebola
-            if self.getMapa()[self.getFilaPersonaje() + 1][self.getColumnaPersonaje()] == Bloques.COFRE:
-                self.getMapa()[14 // 4][6] = Bloques.POKEBOLA
+            if self.getMapa()[self.getFilaPersonaje() + 1][self.getColumnaPersonaje()].getTipo() == Bloques.COFRE:
+                self.getMapa()[14 // 4][6].setTipo(Bloques.POKEBOLA)
                 self.getHabitacionClase().setCofreHallAbierto(True)
                 self.renderizarImagenSinUpdate(Imagenes.PASTO, (self.getAnchoBloque() * self.getColumnaPersonaje()), (self.getAltoBloque() * self.getFilaPersonaje() + self.getAltoBloque()), (self.getAnchoBloque(), self.getAltoBloque()))
                 self.renderizarImagen(Imagenes.ULTRABALL, (self.getAnchoBloque() * self.getColumnaPersonaje()), (self.getAltoBloque() * self.getFilaPersonaje() + self.getAltoBloque()), (self.getAnchoBloque() // 2, self.getAltoBloque() // 2))
             
             # Se selecciona una pokebola
-            elif self.getMapa()[self.getFilaPersonaje() + 1][self.getColumnaPersonaje()] == Bloques.POKEBOLA:
-                self.getMapa()[14 // 4][6] = Bloques.PASTO
+            elif self.getMapa()[self.getFilaPersonaje() + 1][self.getColumnaPersonaje()].getTipo() == Bloques.POKEBOLA:
+                self.getMapa()[14 // 4][6].setTipo(Bloques.PASTO)
                 self.getHabitacionClase().setPokebolaHallAgarrada(True)
                 
                 if (self.getInventarioAsh().inventarioConEspacio()):
@@ -218,15 +218,15 @@ class AppVista(VistaBase):
         elif self.getDireccionPersonaje() == Direcciones.ARRIBA:
             
             # Se selecciona un arbol-pokebola
-            if self.getMapa()[self.getFilaPersonaje() - 1][self.getColumnaPersonaje()] == Bloques.COFRE:
-                self.getMapa()[14 // 4][6] = Bloques.POKEBOLA
+            if self.getMapa()[self.getFilaPersonaje() - 1][self.getColumnaPersonaje()].getTipo() == Bloques.COFRE:
+                self.getMapa()[14 // 4][6].setTipo(Bloques.POKEBOLA)
                 self.getHabitacionClase().setCofreHallAbierto(True)
                 self.renderizarImagenSinUpdate(Imagenes.PASTO, (self.getAnchoBloque() * self.getColumnaPersonaje()), (self.getAltoBloque() * self.getFilaPersonaje() - self.getAltoBloque()), (self.getAnchoBloque(), self.getAltoBloque()))
                 self.renderizarImagen(Imagenes.ULTRABALL, (self.getAnchoBloque() * self.getColumnaPersonaje()), (self.getAltoBloque() * self.getFilaPersonaje() - self.getAltoBloque()), (self.getAnchoBloque(), self.getAltoBloque()))
             
             # Se selecciona una pokebola
-            elif self.getMapa()[self.getFilaPersonaje() - 1][self.getColumnaPersonaje()] == Bloques.POKEBOLA:
-                self.getMapa()[14 // 4][6] = Bloques.PASTO
+            elif self.getMapa()[self.getFilaPersonaje() - 1][self.getColumnaPersonaje()].getTipo() == Bloques.POKEBOLA:
+                self.getMapa()[14 // 4][6].setTipo(Bloques.PASTO)
                 self.getHabitacionClase().setPokebolaHallAgarrada(True)
                 
                 if (self.getInventarioAsh().inventarioConEspacio()):
@@ -235,8 +235,8 @@ class AppVista(VistaBase):
                 self.renderizarImagen(Imagenes.PASTO, (self.getAnchoBloque() * self.getColumnaPersonaje()), (self.getAltoBloque() * self.getFilaPersonaje() - self.getAltoBloque()), (self.getAnchoBloque(), self.getAltoBloque()))
             
             # Se selecciona un charmander
-            elif self.getMapa()[self.getFilaPersonaje() - 1][self.getColumnaPersonaje()] == Bloques.CHARMANDER:
-                self.getMapa()[14 // 4][6] = Bloques.PASTO
+            elif self.getMapa()[self.getFilaPersonaje() - 1][self.getColumnaPersonaje()].getTipo() == Bloques.CHARMANDER:
+                self.getMapa()[14 // 4][6].setTipo(Bloques.PASTO)
                 self.getHabitacionClase().setCharmanderPrimeraAgarrada(True)
                 
                 if (self.getInventarioAsh().inventarioConEspacio()):
@@ -245,8 +245,8 @@ class AppVista(VistaBase):
                 self.renderizarImagen(Imagenes.PASTO, (self.getAnchoBloque() * self.getColumnaPersonaje()), (self.getAltoBloque() * self.getFilaPersonaje() - self.getAltoBloque()), (self.getAnchoBloque(), self.getAltoBloque()))
                 
             # Se selecciona un pikachu
-            elif self.getMapa()[self.getFilaPersonaje() - 1][self.getColumnaPersonaje()] == Bloques.PIKACHU:
-                self.getMapa()[14 // 4][6] = Bloques.PASTO
+            elif self.getMapa()[self.getFilaPersonaje() - 1][self.getColumnaPersonaje()].getTipo() == Bloques.PIKACHU:
+                self.getMapa()[14 // 4][6].setTipo(Bloques.PASTO)
                 self.getHabitacionClase().setPikachuPrimeraAgarrado(True)
                 
                 if (self.getInventarioAsh().inventarioConEspacio()):
@@ -255,8 +255,8 @@ class AppVista(VistaBase):
                 self.renderizarImagen(Imagenes.PASTO, (self.getAnchoBloque() * self.getColumnaPersonaje()), (self.getAltoBloque() * self.getFilaPersonaje() - self.getAltoBloque()), (self.getAnchoBloque(), self.getAltoBloque()))
             
             # Se selecciona un pajaro
-            elif self.getMapa()[self.getFilaPersonaje() - 1][self.getColumnaPersonaje()] == Bloques.PAJARO:
-                self.getMapa()[14 // 4][6] = Bloques.PASTO
+            elif self.getMapa()[self.getFilaPersonaje() - 1][self.getColumnaPersonaje()].getTipo() == Bloques.PAJARO:
+                self.getMapa()[14 // 4][6].setTipo(Bloques.PASTO)
                 self.getHabitacionClase().setPajaroPrimeraAgarrado(True)
                 
                 if (self.getInventarioAsh().inventarioConEspacio()):
@@ -267,15 +267,15 @@ class AppVista(VistaBase):
         elif self.getDireccionPersonaje() == Direcciones.IZQUIERDA:
             
             # Se selecciona un arbol pokebola
-            if self.getMapa()[self.getFilaPersonaje()][self.getColumnaPersonaje() - 1] == Bloques.COFRE:
-                self.getMapa()[14 // 4][6] = Bloques.POKEBOLA
+            if self.getMapa()[self.getFilaPersonaje()][self.getColumnaPersonaje() - 1].getTipo() == Bloques.COFRE:
+                self.getMapa()[14 // 4][6].setTipo(Bloques.POKEBOLA)
                 self.getHabitacionClase().setCofreHallAbierto(True)
                 self.renderizarImagenSinUpdate(Imagenes.PASTO, (self.getAnchoBloque() * self.getColumnaPersonaje() - self.getAnchoBloque()), (self.getAltoBloque() * self.getFilaPersonaje()), (self.getAnchoBloque(), self.getAltoBloque()))
                 self.renderizarImagen(Imagenes.ULTRABALL, (self.getAnchoBloque() * self.getColumnaPersonaje() - self.getAnchoBloque()), (self.getAltoBloque() * self.getFilaPersonaje()), (self.getAnchoBloque(), self.getAltoBloque()))
 
             # Se selecciona una pokebola
-            elif self.getMapa()[self.getFilaPersonaje()][self.getColumnaPersonaje() - 1] == Bloques.POKEBOLA:
-                self.getMapa()[14 // 4][6] = Bloques.PASTO
+            elif self.getMapa()[self.getFilaPersonaje()][self.getColumnaPersonaje() - 1].getTipo() == Bloques.POKEBOLA:
+                self.getMapa()[14 // 4][6].setTipo(Bloques.PASTO)
                 self.getHabitacionClase().setPokebolaHallAgarrada(True)
                 
                 if (self.getInventarioAsh().inventarioConEspacio()):
@@ -286,15 +286,15 @@ class AppVista(VistaBase):
         elif self.getDireccionPersonaje() == Direcciones.DERECHA:
             
             # Se selecciona un arbol pokebola
-            if self.getMapa()[self.getFilaPersonaje()][self.getColumnaPersonaje() + 1] == Bloques.COFRE:
-                self.getMapa()[14 // 4][6] = Bloques.POKEBOLA
+            if self.getMapa()[self.getFilaPersonaje()][self.getColumnaPersonaje() + 1].getTipo() == Bloques.COFRE:
+                self.getMapa()[14 // 4][6].setTipo(Bloques.POKEBOLA)
                 self.getHabitacionClase().setCofreHallAbierto(True)
                 self.renderizarImagenSinUpdate(Imagenes.PASTO, (self.getAnchoBloque() * self.getColumnaPersonaje() + self.getAnchoBloque()), (self.getAltoBloque() * self.getFilaPersonaje()), (self.getAnchoBloque(), self.getAltoBloque()))
                 self.renderizarImagen(Imagenes.ULTRABALL, (self.getAnchoBloque() * self.getColumnaPersonaje() + self.getAnchoBloque()), (self.getAltoBloque() * self.getFilaPersonaje()), (self.getAnchoBloque(), self.getAltoBloque()))
                 
             # Se selecciona una pokebola
-            elif self.getMapa()[self.getFilaPersonaje()][self.getColumnaPersonaje() + 1] == Bloques.POKEBOLA:
-                self.getMapa()[14 // 4][6] = Bloques.PASTO
+            elif self.getMapa()[self.getFilaPersonaje()][self.getColumnaPersonaje() + 1].getTipo() == Bloques.POKEBOLA:
+                self.getMapa()[14 // 4][6].setTipo(Bloques.PASTO)
                 self.getHabitacionClase().setPokebolaHallAgarrada(True)
                 
                 if (self.getInventarioAsh().inventarioConEspacio()):
