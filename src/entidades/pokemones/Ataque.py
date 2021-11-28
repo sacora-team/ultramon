@@ -6,6 +6,9 @@ class Ataque:
 
     def getAtaque(self) -> list:
         return self.ataque
-    
-    def generarAtaque(self, nombre: str, daño: int) -> None:
-        pass
+
+    def generarAtaque(self, tipo: str, nombre: str, daño: int) -> None:
+        if tipo == Ataques.LIVIANO:
+            return nombre, self.getAtaque(tipo)
+        elif tipo == Ataques.INTENSO:
+            return nombre, self.getAtaque(tipo) * 1,5

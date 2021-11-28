@@ -19,8 +19,12 @@ class Pokemon():
     def setEstado(self, estado: int):
         self.estado = estado
 
-    def atacar(self) -> None:
-        pass
+    def getAtaque(self):
+        return self.ataques
+
+    def atacar(self, nombre: str) -> None:
+        if self.getEstado() == EstadosPokemon.VIVO:
+            return self.getAtaque()
 
     def recibirAtaque(self, ataque: int) -> None:
         if ataque > self.getVida():
